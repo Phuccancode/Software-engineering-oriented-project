@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS Users (
 	sex 	        ENUM('M', 'F', 'Other')                     NOT NULL,
 	phone           VARCHAR(10)     UNIQUE                      NOT NULL,
 	email           VARCHAR(255)    UNIQUE                      NOT NULL,
-	creation_date   TIMESTAMP       DEFAULT CURRENT_TIMESTAMP   NOT NULL
+	creation_date   TIMESTAMP       DEFAULT CURRENT_TIMESTAMP   NOT NULL,
+	password		VARCHAR(20)         	                    NOT NULL
 );
 
 
@@ -25,7 +26,7 @@ CREATE TABLE IF NOT EXISTS SocialAccounts (
 	provider_id     VARCHAR(255)                                NOT NULL,
 	provider        ENUM('Facebook', 'Google', 'Twitter')       NOT NULL,
 	email           VARCHAR(255)                                NOT NULL,
-
+	
 	FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
@@ -39,7 +40,7 @@ CREATE TABLE IF NOT EXISTS Tokens (
 	revoked		 	BOOLEAN                                     NOT NULL,
 	expiration_date TIMESTAMP                                   NOT NULL,
 	expired 	    BOOLEAN                                     NOT NULL,
-
+	
 	FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
@@ -48,7 +49,7 @@ CREATE TABLE IF NOT EXISTS BankAccounts (
 	user_id		 	INT                                         NOT NULL,
 	bank_name       VARCHAR(255)                                NOT NULL,
 	account_number  VARCHAR(20)                                 NOT NULL,
-
+	
 	FOREIGN KEY (user_id) REFERENCES Users(id),
 	PRIMARY KEY (user_id, bank_name, account_number)
 );
@@ -86,7 +87,7 @@ CREATE TABLE IF NOT EXISTS Categories (
 DROP TABLE IF EXISTS Products;
 CREATE TABLE IF NOT EXISTS Products (
 	id              INT             AUTO_INCREMENT				PRIMARY KEY,
-	seller_id       INT             UNIQUE                      NOT NULL,
+	seller_id       INT             	                        NOT NULL,
 	store_id		INT                                         NOT NULL,
 	name            VARCHAR(255)                                NOT NULL,
 	brand           VARCHAR(255),
@@ -110,7 +111,7 @@ DROP TABLE IF EXISTS ProductImages;
 CREATE TABLE IF NOT EXISTS ProductImages (
     product_id      INT				                            NOT NULL,
     url	  	   	    VARCHAR(255)                                NOT NULL,
-
+    
 	FOREIGN KEY (product_id) REFERENCES Products(id),
     PRIMARY KEY (product_id, url)
 );
@@ -161,7 +162,7 @@ CREATE TABLE IF NOT EXISTS Reviews (
 	buyer_id        INT             			              	NOT NULL,
 	product_id      INT                                         NOT NULL,
 	time 		  	TIMESTAMP       DEFAULT CURRENT_TIMESTAMP   NOT NULL,
-	rating          INT             CHECK(rating BETWEEN 1 AND 5) NOT NULL,
+	rating          INT             CHECK(rating BETWEEN 1 AND 5) NOT NULL, 
 	text     		TEXT,
 	date            TIMESTAMP       DEFAULT CURRENT_TIMESTAMP   NOT NULL,
 
@@ -178,7 +179,7 @@ CREATE TABLE IF NOT EXISTS ReviewImages (
 	product_id      INT                                         NOT NULL,
 	time 		  	TIMESTAMP       DEFAULT CURRENT_TIMESTAMP   NOT NULL,
 	url	  	   	    VARCHAR(255)                                NOT NULL,
-
+	
 	FOREIGN KEY (buyer_id, product_id, time) REFERENCES Reviews(buyer_id, product_id, time),
 	PRIMARY KEY (buyer_id, time)
 );
