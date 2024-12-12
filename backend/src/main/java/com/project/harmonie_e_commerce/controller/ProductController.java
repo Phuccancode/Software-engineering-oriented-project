@@ -6,7 +6,9 @@ import com.project.harmonie_e_commerce.response.ProductListResponse;
 import com.project.harmonie_e_commerce.response.ProductResponse;
 import com.project.harmonie_e_commerce.model.Product;
 import com.project.harmonie_e_commerce.model.ProductImage;
+import com.project.harmonie_e_commerce.service.ExtractToken;
 import com.project.harmonie_e_commerce.service.IProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.bind.DefaultValue;
@@ -35,9 +37,13 @@ import java.util.*;
 public class ProductController {
     private final IProductService productService;
 
+    private final ExtractToken extractToken;
+
     @PostMapping("")
     public ResponseEntity<?> createProduct(@Valid @RequestBody ProductDTO productDTO,
+                                           HttpServletRequest request,
                                            BindingResult result) {
+            Integer store_id = extractToken.getIdFromToken(request);
             if (result.hasErrors()) {
                 List<String> errorMessages = result.getFieldErrors()
                         .stream()
@@ -45,7 +51,7 @@ public class ProductController {
                         .toList();
                 return ResponseEntity.badRequest().body(errorMessages);
             }
-            ProductResponse newProduct = productService.createProduct(productDTO);
+            ProductResponse newProduct = productService.createProduct(productDTO,store_id);
             return ResponseEntity.ok(newProduct);
 
     }
@@ -127,32 +133,34 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable int id, @Valid @RequestBody ProductDTO productDTO) throws Exception{
+    public ResponseEntity<?> updateProduct(@PathVariable int id,
+                                           @Valid @RequestBody ProductDTO productDTO
+    ) throws Exception{
         productService.updateProduct(id, productDTO);
         return ResponseEntity.ok("Product with id " + id + " is updated");
     }
 
-    @PostMapping("/generateFakeProducts")
-    public ResponseEntity<String> generateFakeProducts() {
-        Faker faker = new Faker();
-        for (int i = 0; i < 5000; i++) {
-            String productName = faker.commerce().productName();
-            if (productService.existsByName(productName)) {
-                continue;
-            }
-            ProductDTO productDTO = ProductDTO.builder()
-                    .name(productName)
-                    .price((float) faker.number().numberBetween(50_000, 50_000_000))
-                    .description(faker.lorem().sentence())
-                    .build();
-            try {
-                productService.createProduct(productDTO);
-            } catch (Exception e) {
-                return ResponseEntity.badRequest().body(e.getMessage());
-            }
-        }
-        return ResponseEntity.ok("Fake products generated successfully");
-    }
+//    @PostMapping("/generateFakeProducts")
+//    public ResponseEntity<String> generateFakeProducts() {
+//        Faker faker = new Faker();
+//        for (int i = 0; i < 5000; i++) {
+//            String productName = faker.commerce().productName();
+//            if (productService.existsByName(productName)) {
+//                continue;
+//            }
+//            ProductDTO productDTO = ProductDTO.builder()
+//                    .name(productName)
+//                    .price((float) faker.number().numberBetween(50_000, 50_000_000))
+//                    .description(faker.lorem().sentence())
+//                    .build();
+//            try {
+//                productService.createProduct(productDTO);
+//            } catch (Exception e) {
+//                return ResponseEntity.badRequest().body(e.getMessage());
+//            }
+//        }
+//        return ResponseEntity.ok("Fake products generated successfully");
+//    }
 
     @GetMapping("/category/{category_id}")
     public ResponseEntity<?> getAllProductsByCategoryId(

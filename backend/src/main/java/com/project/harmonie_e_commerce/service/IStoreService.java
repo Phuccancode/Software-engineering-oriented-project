@@ -3,10 +3,7 @@ package com.project.harmonie_e_commerce.service;
 import com.project.harmonie_e_commerce.dto.StoreDTO;
 // import com.project.harmonie_e_commerce.exception.DataNotFoundException;
 import com.project.harmonie_e_commerce.model.Store;
-import com.project.harmonie_e_commerce.response.BoxResponse;
-import com.project.harmonie_e_commerce.response.ProductResponse;
-import com.project.harmonie_e_commerce.response.StatisticResponse;
-import com.project.harmonie_e_commerce.response.StoreDiscountRespone;
+import com.project.harmonie_e_commerce.response.*;
 
 import java.util.List;
 
@@ -20,5 +17,11 @@ public interface IStoreService{
     List<StoreDiscountRespone> showAllStoreDiscountInStore(Integer storeId);
 
     StatisticResponse getStatisticOfStore(Integer storeId, Integer day, Integer month, Integer year) ;
+
+    List<Store> getAllStore();
+
+    Store updateStore(StoreDTO storeDTO,Integer store_id);
+
+    StringResponse deleteStore(Integer store_id);
 
 }

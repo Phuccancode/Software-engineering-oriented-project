@@ -4,10 +4,7 @@ import com.project.harmonie_e_commerce.dto.StoreDTO;
 import com.project.harmonie_e_commerce.exception.DataNotFoundException;
 import com.project.harmonie_e_commerce.model.*;
 import com.project.harmonie_e_commerce.repository.*;
-import com.project.harmonie_e_commerce.response.BoxResponse;
-import com.project.harmonie_e_commerce.response.ProductResponse;
-import com.project.harmonie_e_commerce.response.StatisticResponse;
-import com.project.harmonie_e_commerce.response.StoreDiscountRespone;
+import com.project.harmonie_e_commerce.response.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -134,5 +131,32 @@ public class StoreService implements IStoreService {
                 .nb_of_boxes(numBox)
                 .totalPrice(sumPrice)
                 .build();
+    }
+
+    @Override
+    public List<Store> getAllStore() {
+        return storeRepository.findAll();
+    }
+
+    @Override
+    public Store updateStore(StoreDTO storeDTO, Integer store_id) {
+        Store store = storeRepository.findById(store_id).orElseThrow(
+                () -> new DataNotFoundException("Store not found by id " + store_id)
+        );
+        store.setAddress(storeDTO.getAddress());
+        store.setName(storeDTO.getName());
+        store.setDescription(storeDTO.getDescription());
+        store.setTax_id(storeDTO.getTax_id());
+
+        return storeRepository.save(store);
+    }
+
+    @Override
+    public StringResponse deleteStore(Integer store_id) {
+        Store store = storeRepository.findById(store_id).orElseThrow(
+                () -> new DataNotFoundException("Store not found by id " + store_id)
+        );
+        storeRepository.delete(store);
+        return new StringResponse("Delete successfully");
     }
 }

@@ -11,8 +11,8 @@ import lombok.Data;
 @Data
 @Builder
 public class ProductDTO {
-    @JsonProperty("store_id")
-    private Integer storeId;
+//    @JsonProperty("store_id")
+//    private Integer storeId;
 
     @NotBlank(message = "Title is required")
     @Size(min = 3, max = 200, message = "Title must be between 3 and 200 characters")

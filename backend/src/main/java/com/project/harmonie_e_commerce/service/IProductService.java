@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface IProductService {
-    ProductResponse createProduct(ProductDTO productDTO);
+    ProductResponse createProduct(ProductDTO productDTO, Integer store_id);
     Product getProductById(int id);
     Page<ProductResponse> getAllProducts(PageRequest pageRequest);
     String uploadImages(Integer productId, List<MultipartFile> files) throws Exception;

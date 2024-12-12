@@ -39,14 +39,14 @@
      private final BoxRepository boxRepository;
 
      @Override
-     public ProductResponse createProduct(ProductDTO productDTO) throws DataNotFoundException {
+     public ProductResponse createProduct(ProductDTO productDTO,Integer store_id) throws DataNotFoundException {
          Category existingCategory = categoryRepository
                  .findById(productDTO.getCategoryId())
                  .orElseThrow(() -> new DataNotFoundException(
                          "Cannot find category with id: " + productDTO.getCategoryId()));
-         Store existingStore = storeRepository.findById(productDTO.getStoreId())
+         Store existingStore = storeRepository.findById(store_id)
                  .orElseThrow(() -> new DataNotFoundException(
-                         "Cannot find store with id: " + productDTO.getStoreId()));
+                         "Cannot find store with id: " + store_id));
          Product newProduct = Product.builder()
                  .store(existingStore)
                  .name(productDTO.getName())
@@ -135,7 +135,8 @@
      @Override
      public ProductResponse updateProduct(
              int id,
-             ProductDTO productDTO)
+             ProductDTO productDTO
+     )
              throws Exception {
          Product existingProduct = getProductById(id);
              // copy các thuộc tính từ DTO -> Product
