@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class ProductInCartKey implements Serializable {
     @Column(name = "cart_id")
-    private Long cartId;
+    private Integer cartId;
     @Column(name = "product_id")
-    private Long productId;
+    private Integer productId;
 }

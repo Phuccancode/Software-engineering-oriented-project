@@ -1,13 +1,47 @@
 import React, { useState } from 'react';
 import styles from '../styles/Form.module.css';
-import backgroungImage from '../assets/images/bglogin.png';
-import { Link } from 'react-router-dom';
-import { Button } from 'antd';
-import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
-
+import backgroungImage from '../assets/images/background.jpg';
+import { Button, Col, DatePicker, Form, Input, notification, Radio, Row } from 'antd';
+import { loginAPI } from '../services/api.service1';
+import { Link, useNavigate } from 'react-router-dom';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 
 const LoginPage: React.FC = () => {
-    const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [loading, setLoading] = useState(false);
+    const handleSubmit = async () => {
+        setLoading(true);
+        const data = { email, password }
+        const response: any = await loginAPI(data);
+        if (response.statusCode === 200) {
+            notification.success({
+                message: 'Success',
+                description: 'Login successfully'
+            })
+            localStorage.setItem('access_token', response.data.token);
+            setLoading(false);
+            setTimeout(() => {
+                navigate('/');
+            }, 1000);
+        }
+        else {
+            notification.error({
+                message: `Lỗi ${response.statusCode}`,
+                description: response.message
+            })
+            setLoading(false);
+
+        }
+
+    }
+
+    const hanleLoginGoogle = (response: any) => {
+        const token = response.credential;
+        console.log(token);
+    }
+
     return (
         <main className={styles.loginPage}>
             <section className={styles.mainContent}>
@@ -18,68 +52,90 @@ const LoginPage: React.FC = () => {
                         className={styles.backgroundImage}
                         alt=""
                     />
-                    <form
+                    <Form
+                        name="basic"
+                        labelCol={{ span: 4 }}
+                        wrapperCol={{ span: 16 }}
+                        initialValues={{ remember: true }}
+                        //   onFinish={onFinish}
+                        //   onFinishFailed={onFinishFailed}
+                        autoComplete="off"
                         className={styles.loginFormContainer}
                         style={{
-                            height: '500px',
-                            marginTop: '45px',
-                            marginBottom: '45px',
+                            height: '100%',
+                            scale: '1.5',
+                            marginTop: '8.6%',
+                            marginBottom: '8.6%',
+                            position: 'relative',
+                            left: '-5%',
+
                         }}
                     >
-                        <h1 className={styles.formTitle}>
-                            Thông tin đăng nhập
-                        </h1>
 
-                        <label htmlFor="email" className={styles['visually-hidden']}>
-                            Email
-                        </label>
-                        <input
-                            type="email"
-                            id="username"
-                            className={styles.inputField}
-                            placeholder="Email"
-                            style={{ outline: 'none' }}
-                        />
+                        <Form.Item
 
-                        <div className={styles.passwordContainer}>
-                            <label htmlFor="password" className={styles['visually-hidden']}>
-                                Mật khẩu
-                            </label>
-                            <input
-                                type={showPassword ? 'text' : 'password'}
-                                id="password"
-                                placeholder="Mật khẩu"
-                                style={{
-                                    border: 'none',
-                                    background: 'transparent',
-                                    fontSize: '24px',
-                                    width: '100%',
-                                    height: '100%',
-                                    outline: 'none',
-                                }}
+                            label="Email"
+                            name="email"
+                            rules={[{ required: true, message: 'Please input your email!', type: 'email' }]}
+                        >
+                            <Input
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Mật khẩu"
+                            name="password"
+                            rules={[{ required: true, message: 'Please input your password!' }]}
+                        >
+                            <Input.Password
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            wrapperCol={{ offset: 14, span: 16 }}
+                            style={{ marginBottom: '0px', marginTop: '-5%' }}
+                        >
+                            <Link to="/forgot-password">Quên mật khẩu?</Link>
+                        </Form.Item>
+
+                        <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
                             <Button
-                                icon={showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-                                onClick={() => setShowPassword(!showPassword)}
-                                role="button"
-                                style={{
-                                    color: '#000',
-                                    background: 'transparent',
-                                    border: 'none',
-                                    outline: 'none',
-                                }}
-                            />
-                        </div>
+                                type="primary"
+                                loading={loading}
+                                onClick={() => handleSubmit()}
+                                style={{ width: '100%', height: '40px' }}
 
-                        <button type="submit" className={styles.loginButton}>
-                            Đăng nhập
-                        </button>
 
-                        <nav className={styles.linksContainer}>
-                            <Link to="/register" className={styles.registerLink}>Bạn chưa có tài khoản?</Link>
-                            <Link to="/forgot-password" className={styles.forgotPasswordLink}>Quên mật khẩu?</Link>
-                        </nav>
-                    </form>
+                            >
+                                Đăng nhập
+                            </Button>
+                        </Form.Item>
+
+
+                        <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+                            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+                                <div>
+                                    <h1>Login with Google</h1>
+
+                                    <GoogleLogin
+                                        onSuccess={(response) => hanleLoginGoogle(response)}
+                                        onError={() => { alert('Login Failed') }}
+                                    />
+
+                                </div>
+                            </GoogleOAuthProvider>
+                        </Form.Item>
+
+                        <Form.Item wrapperCol={{ offset: 14, span: 16 }}>
+                            <Link to="/register">Bạn chưa có tài khoản?</Link>
+                        </Form.Item>
+
+
+                    </Form>
                 </div>
             </section>
         </main>

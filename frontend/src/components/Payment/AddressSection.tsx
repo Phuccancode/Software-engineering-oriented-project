@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import styles from './AddressSection.module.css';
+import { fetchUserDeliveryAddressesAPI } from '../../services/api.service2.ts';
 
 interface Address {
-  userPhone: string;
-  road_number: string;
-  ward: string;
-  district: string;
+  id: number;
   city: string;
+  district: string;
+  ward: string;
+  consignee_name: string;
+  phone_number: string;
+  road_number: string;
 }
 
 interface AddressSectionProps {
-  userName: string;
-  address: Address[];
+  onAddressSelect: (addressId: number) => void;
 }
 
-const AddressSection: React.FC = () => {
-  const [data, setData] = useState<AddressSectionProps | null>(null);
+const AddressSection: React.FC<AddressSectionProps> = ({ onAddressSelect }) => {
+  const [data, setData] = useState<Address[] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
 
   useEffect(() => {
-    // Giả sử API trả về dữ liệu theo cấu trúc bạn đã cung cấp
-    fetch('https://f41ad901-d7aa-423c-88ff-b02678679bb6.mock.pstmn.io/address') // Thay đổi URL này theo API thực tế của bạn
-      .then((response) => response.json())
-      .then((result) => {
+    const fetchAddresses = async () => {
+      try {
+        const result = await fetchUserDeliveryAddressesAPI(1);
         setData(result.data);
-        setSelectedAddress(result.data.address[0]); // Hiển thị địa chỉ đầu tiên
-      })
-      .catch((error) => {
+        setSelectedAddress(result.data[0]); // Hiển thị địa chỉ đầu tiên
+        onAddressSelect(result.data[0].id); // Pass the first address ID to the parent component
+      } catch (error) {
         console.error('Error fetching data:', error);
-      });
-  }, []);
+      }
+    };
+
+    fetchAddresses();
+  }, [onAddressSelect]);
 
   const handleChangeClick = () => {
     setIsModalOpen(true);
@@ -43,6 +47,7 @@ const AddressSection: React.FC = () => {
   const handleSelectAddress = (address: Address) => {
     setSelectedAddress(address);
     setIsModalOpen(false); // Đóng modal sau khi chọn địa chỉ
+    onAddressSelect(address.id); // Pass the selected address ID to the parent component
   };
 
   if (!data || !selectedAddress) {
@@ -56,21 +61,21 @@ const AddressSection: React.FC = () => {
       <h2 className={styles.sectionTitle}>Địa chỉ nhận hàng</h2>
       <div className={styles.addressInfo}>
         <div className={styles.userDetails}>
-          <p className={styles.userName}>{data.userName}</p>
+          <p className={styles.userName}>{selectedAddress.consignee_name}</p>
         </div>
         <div className={styles.addressDetails}>
-          <p className={styles.userPhone}>{selectedAddress.userPhone}</p>
+          <p className={styles.userPhone}>SĐT: {selectedAddress.phone_number}</p>
           <p className={styles.addressText}>{addressText}</p>
           <button className={styles.changeButton} onClick={handleChangeClick}>Thay đổi</button>
         </div>
       </div>
 
-       {/* Modal */}
-       {isModalOpen && (
+      {/* Modal */}
+      {isModalOpen && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
             <h3>Chọn địa chỉ để thay đổi</h3>
-            {data.address.map((address, index) => (
+            {data.map((address, index) => (
               <button 
                 key={index} 
                 className={styles.addressOptionButton} 
@@ -82,7 +87,7 @@ const AddressSection: React.FC = () => {
             <button onClick={handleModalClose}>Đóng</button>
           </div>
         </div>
-      )}  
+      )}
     </section>
   );
 };

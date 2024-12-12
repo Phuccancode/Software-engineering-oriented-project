@@ -1,6 +1,4 @@
-// PaymentMethodSection.tsx
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './PaymentMethodSection.module.css';
 
 interface PaymentMethod {
@@ -17,7 +15,6 @@ interface Bank {
 
 const paymentMethods: PaymentMethod[] = [
   { id: 1, name: 'Tài khoản ngân hàng', icon: '' },
-  { id: 2, name: 'Thẻ tín dụng/Ghi nợ', icon: '' },
   { id: 3, name: 'Thanh toán khi nhận hàng', icon: '' }
 ];
 
@@ -39,32 +36,23 @@ const banks: Bank[] = [
   }
 ];
 
-const PaymentMethodSection: React.FC = () => {
-  // Khởi tạo trạng thái với phương thức mặc định (ID = 1)
+interface PaymentMethodSectionProps {
+  onPaymentMethodChange: (methodId: number) => void;
+}
+
+const PaymentMethodSection: React.FC<PaymentMethodSectionProps> = ({ onPaymentMethodChange }) => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<number>(paymentMethods[0].id);
   const [selectedBank, setSelectedBank] = useState<number | null>(null);
 
-  const [cardDetails, setCardDetails] = useState({
-    cardNumber: '',
-    expiryDate: '',
-    cvv: '',
-    cardHolderName: ''
-  });
+  useEffect(() => {
+    onPaymentMethodChange(selectedPaymentMethod);
+  }, [selectedPaymentMethod, onPaymentMethodChange]);
 
   const handlePaymentMethodClick = (methodId: number) => {
     setSelectedPaymentMethod(methodId);
 
-    // Reset các trạng thái phụ khi thay đổi phương thức thanh toán
-    if (methodId !== 2) {
-      setCardDetails({
-        cardNumber: '',
-        expiryDate: '',
-        cvv: '',
-        cardHolderName: ''
-      });
-    }
+    
 
-    // Reset ngân hàng khi chọn phương thức thanh toán khác
     if (methodId !== 1) {
       setSelectedBank(null);
     }
@@ -74,31 +62,18 @@ const PaymentMethodSection: React.FC = () => {
     setSelectedBank(bankId);
   };
 
-  const handleCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setCardDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value
-    }));
-  };
+  
 
   return (
     <section className={styles.paymentMethodSection}>
       <h2 className={styles.sectionTitle}>Phương thức thanh toán</h2>
 
-      {/* Phần Chọn Phương thức Thanh toán và Nút Liên kết */}
       <div className={styles.paymentOptions}>
-        {/* Nút Liên kết Ngân hàng */}
-        
-
-        {/* Phần Chọn Phương thức Thanh toán */}
         <div className={styles.paymentMethods}>
           {paymentMethods.map((method) => (
             <button
               key={method.id}
-              className={`${styles.paymentMethod} ${
-                selectedPaymentMethod === method.id ? styles.active : ''
-              }`}
+              className={`${styles.paymentMethod} ${selectedPaymentMethod === method.id ? styles.active : ''}`}
               onClick={() => handlePaymentMethodClick(method.id)}
             >
               {method.icon && <img src={method.icon} alt="" className={styles.methodIcon} />}
@@ -108,7 +83,6 @@ const PaymentMethodSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Phần Chọn Ngân hàng */}
       {selectedPaymentMethod === 1 && (
         <div className={styles.bankList}>
           <button className={styles.linkBankButton}>Liên kết ngân hàng khác</button>
@@ -131,50 +105,11 @@ const PaymentMethodSection: React.FC = () => {
         </div>
       )}
 
-      {/* Phần Điều Kiện Hiển Thị Dựa trên Phương Thức Thanh Toán */}
       <div className={styles.paymentDetails}>
         {selectedPaymentMethod === 1 && (
           <div className={styles.bankAccountDetails}>
             <h3>Thông Tin Tài Khoản Ngân Hàng</h3>
             <p>Vui lòng chọn ngân hàng từ danh sách trên.</p>
-          </div>
-        )}
-
-        {selectedPaymentMethod === 2 && (
-          <div className={styles.cardDetails}>
-            <h3>Thông Tin Thẻ Tín Dụng/Ghi Nợ</h3>
-            <input
-              type="text"
-              name="cardNumber"
-              placeholder="Số thẻ"
-              value={cardDetails.cardNumber}
-              onChange={handleCardChange}
-              className={styles.inputField}
-            />
-            <input
-              type="text"
-              name="expiryDate"
-              placeholder="Ngày hết hạn (MM/YY)"
-              value={cardDetails.expiryDate}
-              onChange={handleCardChange}
-              className={styles.inputField}
-            />
-            <input
-              type="text"
-              name="cvv"
-              placeholder="CVV"
-              value={cardDetails.cvv}
-              onChange={handleCardChange}
-              className={styles.inputField}
-            />
-            <input
-              type="text"
-              name="cardHolderName"
-              placeholder="Tên chủ thẻ"
-              value={cardDetails.cardHolderName}
-              onChange={handleCardChange}
-              className={styles.inputField}
-            />
           </div>
         )}
 

@@ -50,6 +50,7 @@ export const Order = () => {
                                             fontSize: '16px',
                                             cursor: 'pointer',
                                             fontWeight: 'bold',
+                                            color: '#000000'
                                         }}
                                     >Chi tiết</button>
                                 </td>

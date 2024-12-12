@@ -11,12 +11,12 @@ import org.springframework.data.domain.PageRequest;
 import java.util.List;
 
 public interface IProductService {
-    Product createProduct(ProductDTO productDTO) throws Exception;
-    Product getProductById(long id) throws Exception;
+    ProductResponse createProduct(ProductDTO productDTO) throws Exception;
+    Product getProductById(int id) throws Exception;
     Page<ProductResponse> getAllProducts(PageRequest pageRequest);
-    Product updateProduct(long id, ProductDTO productDTO) throws Exception;
-    void deleteProduct(long id);
+    ProductResponse updateProduct(int id, ProductDTO productDTO) throws Exception;
+    void deleteProduct(int id);
     boolean existsByName(String name);
     ProductImage createProductImage(ProductImageDTO productImageDTO) throws Exception;
-    List<ProductImage> getProductImagesByProductId(long productId);
+    List<ProductImage> getProductImagesByProductId(int productId);
 }

@@ -12,8 +12,8 @@ interface CartItem {
     price: number;
     quantity: number;
     productURL: string;
-    storeID: number;
-    storeName: string;
+    store_id: number;
+    store_name: string;
 }
 
 const ShoppingCart: React.FC = () => {
@@ -93,7 +93,7 @@ const ShoppingCart: React.FC = () => {
                                     <p className={styles.productName}>{item.name}</p>
                                     <p className={styles.productBrand}>{item.brand}</p>
                                     <p className={styles.productCategory}>{item.catogoryName}</p>
-                                    <p className={styles.storeName}>{item.storeName}</p>
+                                    <p className={styles.storeName}>{item.store_name}</p>
                                 </div>
                             </div>
                             <div className={styles.productPricing}>

@@ -1,50 +1,121 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './ProductSection.module.css';
 import PaymentMethodSection from './PaymentMethodSection';
+import { fetchStoreDiscountAPI, createOrderAPI, fetchShippingDiscountAPI, fetchSystemDiscountAPI } from '../../services/api.service2.ts';
+
 interface Product {
   id: number;
   name: string;
+  brand: string;
+  catogoryName: string;
   price: number;
   quantity: number;
   productURL: string;
-  storeID: number;
-  storeName: string;
+  store_id: number;
+  store_name: string;
+}
+
+interface Voucher {
+  id: number;
+  code: string;
+  quantity: number;
+  amount: number;
+  release_date: string;
+  start_date: string;
+  expiration_date: string;
+}
+
+interface Discount {
+  id: number;
+  code: string;
+  quantity: number;
+  release_date: string;
+  start_date: string;
+  expiration_date: string;
+  max_amount: number;
+  min_bill_amount?: number;
+  percentage?: number;
 }
 
 interface ProductSectionProps {
   products: Product[];
+  selectedAddressId: number | null;
 }
 
-const ProductSection: React.FC<ProductSectionProps> = ({ products }) => {
+const ProductSection: React.FC<ProductSectionProps> = ({ products, selectedAddressId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedVouchers, setSelectedVouchers] = useState<{ [productID: number]: number | null }>({});
   const [activeProductID, setActiveProductID] = useState<number | null>(null);
-
+  const [productVouchers, setProductVouchers] = useState<{ [productID: number]: Voucher[] }>({});
+  const [orderResponse, setOrderResponse] = useState(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<number>(1);
+  const [selectedShippingDiscount, setSelectedShippingDiscount] = useState<number | null>(null);
+  const [shippingDiscounts, setShippingDiscounts] = useState<Discount[]>([]);
+  const [selectedSystemDiscount, setSelectedSystemDiscount] = useState<number | null>(null);
+  const [systemDiscounts, setSystemDiscounts] = useState<Discount[]>([]);
   const shippingCost = 15000;
   const voucherDiscount = 0;
 
-  const vouchers = [
-    { id: 1, name: 'Voucher Giảm 10k', discount: 10000 },
-    { id: 2, name: 'Voucher Giảm 20k', discount: 20000 },
-    { id: 3, name: 'Voucher Giảm 30k', discount: 30000 },
-  ];
+  useEffect(() => {
+    const fetchVouchers = async () => {
+      const vouchersData: { [key: number]: Voucher[] } = {};
+      for (const product of products) {
+        try {
+          const result = await fetchStoreDiscountAPI(product.store_id);
+          console.log(`Vouchers for product ${product.id}:`, result.data);
+          vouchersData[product.id] = result;
+        } catch (error) {
+          console.error(`Error fetching vouchers for product ${product.id}:`, error);
+        }
+      }
+      setProductVouchers(vouchersData);
+    };
+
+    fetchVouchers();
+  }, [products]);
+
+  useEffect(() => {
+    const fetchShippingDiscounts = async () => {
+      try {
+        const data = await fetchShippingDiscountAPI();
+        setShippingDiscounts(data);
+      } catch (error) {
+        console.error('Error fetching shipping discounts:', error);
+      }
+    };
+
+    fetchShippingDiscounts();
+  }, []);
+
+  useEffect(() => {
+    const fetchSystemDiscounts = async () => {
+      try {
+        const data = await fetchSystemDiscountAPI();
+        setSystemDiscounts(data);
+      } catch (error) {
+        console.error('Error fetching system discounts:', error);
+      }
+    };
+
+    fetchSystemDiscounts();
+  }, []);
 
   if (!products || products.length === 0) {
     return <div>Không có sản phẩm trong giỏ hàng.</div>;
   }
 
   const groupedProducts = (products || []).reduce((acc: { [key: string]: Product[] }, product) => {
-    const storeID = product.storeID ?? '0';
-    if (!acc[storeID]) acc[storeID] = [];
-    acc[storeID].push(product);
+    const store_id = product.store_id ?? '0';
+    if (!acc[store_id]) acc[store_id] = [];
+    acc[store_id].push(product);
     return acc;
   }, {});
 
-  const totalCost = Object.keys(groupedProducts).reduce((acc, storeID) => {
-    const storeProducts = groupedProducts[storeID];
+  const totalCost = Object.keys(groupedProducts).reduce((acc, store_id) => {
+    const storeProducts = groupedProducts[store_id];
     const storeTotalCost = storeProducts.reduce((acc, product) => acc + product.price * product.quantity, 0);
     const storeFinalCost = storeTotalCost - storeProducts.reduce((acc, product) => acc + (selectedVouchers[product.id] ?? voucherDiscount), 0);
-    return acc + storeFinalCost + shippingCost;
+    return acc + storeFinalCost + shippingCost - (selectedShippingDiscount ? shippingDiscounts.find(discount => discount.id === selectedShippingDiscount)?.max_amount ?? 0 : 0);
   }, 0);
 
   const toggleModal = (productID: number) => {
@@ -54,10 +125,47 @@ const ProductSection: React.FC<ProductSectionProps> = ({ products }) => {
     }
   };
 
-  const handleVoucherSelect = (voucherDiscount: number) => {
+  const handleVoucherSelect = (voucherDiscount: number, voucherId: number) => {
     if (activeProductID !== null) {
-      setSelectedVouchers(prev => ({ ...prev, [activeProductID]: voucherDiscount }));
+      setSelectedVouchers(prev => ({ ...prev, [activeProductID]: voucherId }));
       toggleModal(activeProductID);
+    }
+  };
+
+  const handlePaymentMethodChange = (methodId: number) => {
+    setSelectedPaymentMethod(methodId);
+  };
+
+  const handleShippingDiscountChange = (discountId: number | null) => {
+    setSelectedShippingDiscount(discountId);
+  };
+
+  const handleSystemDiscountChange = (discountId: number | null) => {
+    setSelectedSystemDiscount(discountId);
+  };
+
+  const handlePayment = async () => {
+    if (selectedAddressId === null) {
+      alert('Please select a delivery address.');
+      return;
+    }
+    const selectedVoucherIds = Object.values(selectedVouchers).filter(voucher => voucher !== null) as number[];
+
+    const orderData = {
+      consignee_information_id: selectedAddressId, // Use the selected address ID
+      system_discount_id: selectedSystemDiscount?? null, // Use the selected system discount ID
+      pay_method: selectedPaymentMethod === 1 ? "Credit" : "Cash",
+      products: products.map(product => ({ id: product.id, quantity: product.quantity })),
+      store_discounts_ids: selectedVoucherIds,
+      shipping_discounts_id: selectedShippingDiscount ?? null // Use the selected shipping discount ID or default to null
+    };
+
+    try {
+      console.log('Order created successfully:', orderData);
+      const response = await createOrderAPI(orderData);
+      setOrderResponse(response);
+    } catch (error) {
+      console.error('Error creating order:', error);
     }
   };
 
@@ -65,14 +173,14 @@ const ProductSection: React.FC<ProductSectionProps> = ({ products }) => {
     <section className={styles.productSection}>
       <h2 className={styles.sectionTitle}>Sản Phẩm</h2>
 
-      {Object.keys(groupedProducts).map((storeID) => {
-        const storeProducts = groupedProducts[storeID];
+      {Object.keys(groupedProducts).map((store_id) => {
+        const storeProducts = groupedProducts[store_id];
         const storeTotalCost = storeProducts.reduce((acc, product) => acc + product.price * product.quantity, 0);
         const storeFinalCost = storeTotalCost - storeProducts.reduce((acc, product) => acc + (selectedVouchers[product.id] ?? voucherDiscount), 0);
 
         return (
-          <div key={storeID} className={styles.storeContainer}>
-            <h3>{storeProducts[0].storeName}</h3>
+          <div key={store_id} className={styles.storeContainer}>
+            <h3>{storeProducts[0].store_name}</h3>
 
             {storeProducts.map((product) => {
               const productTotal = product.price * product.quantity;
@@ -97,7 +205,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ products }) => {
                     <span>Voucher của Sản phẩm</span>
                     <button className={styles.voucherButton} onClick={() => toggleModal(product.id)}>Chọn Voucher Khác</button>
                     <span className={styles.voucherDiscount}>
-                      -{(selectedVouchers[product.id] ?? voucherDiscount).toLocaleString()} VND
+                      -{(productVouchers[product.id]?.find(v => v.id === selectedVouchers[product.id])?.amount ?? voucherDiscount).toLocaleString()} VND
                     </span>
                   </div>
 
@@ -115,7 +223,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ products }) => {
             </div>
 
             <div className={styles.totalCostRow}>
-              <span className={styles.totalCostText}>Tổng chi phí cửa hàng {storeProducts[0].storeName}:</span>
+              <span className={styles.totalCostText}>Tổng chi phí cửa hàng {storeProducts[0].store_name}:</span>
               <span className={styles.totalCostAmount}>
                 {storeFinalCost.toLocaleString()} VND
               </span>
@@ -123,30 +231,57 @@ const ProductSection: React.FC<ProductSectionProps> = ({ products }) => {
           </div>
         );
       })}
-      <PaymentMethodSection />
-      <div className={styles.totalCostRow}>
-        <span className={styles.totalCostText}>Tổng chi phí giỏ hàng:</span>
-        <span className={styles.totalCostAmount}>{totalCost.toLocaleString()} VND</span>
-      
+      <PaymentMethodSection onPaymentMethodChange={handlePaymentMethodChange} />
+      <div className={styles.discountSection}>
+        <h3>Chọn Giảm Giá Vận Chuyển</h3>
+        <select onChange={(e) => handleShippingDiscountChange(e.target.value ? Number(e.target.value) : null)}>
+          <option value="">Không chọn</option>
+          {shippingDiscounts.map(discount => (
+            <option key={discount.id} value={discount.id}>
+              {discount.code} - Giảm {discount.max_amount.toLocaleString()} VND
+            </option>
+          ))}
+        </select>
       </div>
-<button className={styles.paymentButton} onClick={() => alert('Thanh toán thành công!')}>Thanh toán</button>
+      <div className={styles.discountSection}>
+        <h3>Chọn Giảm Giá Hệ Thống</h3>
+        <select onChange={(e) => handleSystemDiscountChange(e.target.value ? Number(e.target.value) : null)}>
+          <option value="">Không chọn</option>
+          {systemDiscounts.map(discount => (
+            <option key={discount.id} value={discount.id}>
+              {discount.code} - Giảm {discount.max_amount.toLocaleString()} VND
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className={styles.totalCostRow}>
+        <span className={styles.totalCostText}>Tổng chi phí giỏ hàng: </span>
+        <span className={styles.totalCostAmount}>{totalCost.toLocaleString()} VND</span>
+      </div>
+      <button className={styles.paymentButton} onClick={handlePayment}>Thanh toán</button>
       {isModalOpen && activeProductID !== null && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
             <h3>Chọn Voucher</h3>
             <div className={styles.voucherOptions}>
-              {vouchers.map(voucher => (
+              {productVouchers[activeProductID]?.map(voucher => (
                 <button
                   key={voucher.id}
-                  className={`${styles.voucherOption} ${selectedVouchers[activeProductID] === voucher.discount ? styles.selectedVoucher : ''}`}
-                  onClick={() => handleVoucherSelect(voucher.discount)}
+                  className={`${styles.voucherOption} ${selectedVouchers[activeProductID] === voucher.id ? styles.selectedVoucher : ''}`}
+                  onClick={() => handleVoucherSelect(voucher.amount, voucher.id)}
                 >
-                  {voucher.name} - Giảm {voucher.discount.toLocaleString()} VND
+                  {voucher.code} - Giảm {voucher.amount.toLocaleString()} VND
                 </button>
               ))}
             </div>
             <button className={styles.closeButton} onClick={() => toggleModal(activeProductID!)}>Đóng</button>
           </div>
+        </div>
+      )}
+      {orderResponse && (
+        <div className={styles.orderResponse}>
+          <h3>Order Response:</h3>
+          <pre>{JSON.stringify(orderResponse, null, 2)}</pre>
         </div>
       )}
     </section>

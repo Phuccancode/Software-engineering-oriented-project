@@ -1,114 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../styles/StoreCreation.module.css';
-
-interface InputFieldProps {
-    label: string;
-    id: string;
-    type: string;
-}
-
-const InputField: React.FC<InputFieldProps> = ({ label, id, type }) => (
-    <div className={styles.inputGroup}>
-        <label htmlFor={id} className={styles.label}>{label}</label>
-        <input type={type} id={id} className={styles.input} />
-    </div>
-);
-
-const StoreInfoForm: React.FC = () => {
-    return (
-        <>
-            <div className={styles.formGroup}>
-                <h2 className={styles.sectionTitle}>Thông tin cửa hàng</h2>
-            </div>
-            <form style={{
-                position: 'relative',
-                left: '40%',
-                top: '-60px',
-            }}>
-                <div className={styles.infoRow}>
-                    <label htmlFor="nameStore" className={styles.infoLabel}>Tên cửa hàng:</label>
-                    <input
-                        type="text"
-                        name="nameStore"
-                        className={styles.infoValue}
-                        placeholder="Tên cửa hàng"
-                        style={{ outline: 'none' }}
-                    />
-                </div>
-                <div className={styles.infoRow}>
-                    <label htmlFor="Email" className={styles.infoLabel}>Email:</label>
-                    <input
-                        type="email"
-                        name="email"
-                        className={styles.infoValue}
-                        placeholder="Email"
-                        style={{ outline: 'none' }}
-                    />
-                </div>
-                <div className={styles.infoRow}>
-                    <label htmlFor="Phone" className={styles.infoLabel}>Số điện thoại:</label>
-                    <input
-                        type="text"
-                        name="phone"
-                        className={styles.infoValue}
-                        placeholder="Số điện thoại"
-                        style={{ outline: 'none' }}
-                    />
-                </div>
-                <div className={styles.infoRow}>
-                    <label htmlFor="address" className={styles.infoLabel}>Địa chỉ:</label>
-                    <input
-                        type="text"
-                        name="address"
-                        className={styles.infoValue}
-                        placeholder="Địa chỉ"
-                        style={{ outline: 'none' }}
-                    />
-                </div>
-            </form>
-        </>
-
-    )
-};
-
-
-interface InputFieldProps {
-    label: string;
-    id: string;
-    type: string;
-}
-
-const TaxInfoForm: React.FC = () => {
-    return (
-        <>
-            <div className={styles.formGroup}>
-                <h2 className={styles.sectionTitle}>Thông tin thuế</h2>
-            </div>
-            <form style={{
-                position: 'relative',
-                left: '42.7%',
-                top: '-60px',
-            }}>
-                <div className={styles.infoRow}>
-                    <label htmlFor="tax" className={styles.infoLabel}>Mã số thuế:</label>
-                    <input
-                        type="text"
-                        name="tax"
-                        className={styles.infoValue}
-                        placeholder="Mã số thuế"
-                        style={{ outline: 'none' }}
-                    />
-                </div>
-
-            </form>
-        </>
-    );
-};
-
-
-
 const CreateStore: React.FC = () => {
+    const [nameStore, setNameStore] = useState<string>('');
+    const [address, setAddress] = useState<string>('');
+    const [tax, setTax] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
+
+    const handleChangeDescription = (e: any) => {
+        setDescription(e.target.value);
+        const textarea = e.target;
+        textarea.style.height = 'auto';
+        textarea.style.height = `${textarea.scrollHeight - 60}px`;
+    };
+
     return (
+
+
+
+
         <div
             style={{
                 backgroundColor: '#f5f5f5',
@@ -129,9 +38,72 @@ const CreateStore: React.FC = () => {
                     <h1 className={styles.title}>Tạo cửa hàng</h1>
                 </div>
                 <section className={styles.formContainer}>
-                    <StoreInfoForm />
-                    <TaxInfoForm />
-                    <button type="submit" className={styles.submitButton}>Hoàn tất</button>
+                    <div className={styles.formGroup}>
+                        <h2 className={styles.sectionTitle}>Thông tin cửa hàng</h2>
+                    </div>
+                    <form style={{
+                        position: 'relative',
+                        left: '40%',
+                        top: '-60px',
+                    }}>
+                        <div className={styles.infoRow}>
+                            <label htmlFor="nameStore" className={styles.infoLabel}>Tên cửa hàng:</label>
+                            <input
+                                type="text"
+                                name="nameStore"
+                                className={styles.infoValue}
+                                placeholder="Tên cửa hàng"
+                                style={{ outline: 'none' }}
+                            />
+                        </div>
+                        <div className={styles.infoRow}>
+                            <label htmlFor="address" className={styles.infoLabel}>Địa chỉ:</label>
+                            <input
+                                type="text"
+                                name="address"
+                                className={styles.infoValue}
+                                placeholder="Địa chỉ"
+                                style={{ outline: 'none' }}
+                            />
+                        </div>
+                        <div className={styles.infoRow}>
+                            <label htmlFor="tax" className={styles.infoLabel}>Mã số thuế:</label>
+                            <input
+                                type="text"
+                                name="tax"
+                                className={styles.infoValue}
+                                placeholder="Mã số thuế"
+                                style={{ outline: 'none' }}
+                            />
+                        </div>
+
+                        <div className={styles.infoRow}>
+                            <label htmlFor="description" className={styles.infoLabel}>Mô tả:</label>
+                            <textarea
+                                name="description"
+                                className={styles.infoValue}
+                                value={description}
+                                onChange={(e) => handleChangeDescription(e)}
+                                placeholder="Mô tả"
+
+                                style={{
+                                    fontFamily: 'Lato, sans-serif',
+                                    height: '25px',
+                                }}
+
+                            />
+                        </div>
+                    </form>
+                    <button
+                        type="button"
+                        className={styles.submitButton}
+                        style={{
+                            position: 'relative',
+                            top: '-60px',
+                        }}
+
+                        onClick={() => { alert('Đã tạo cửa hàng thành công!') }}
+                    >Hoàn tất</button>
                 </section>
             </main>
         </div>

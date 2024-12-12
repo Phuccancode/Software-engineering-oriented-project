@@ -4,20 +4,23 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name="product_images")
+@Table(
+        name="product_images",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"product_id","url"})
+)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-
 public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @Column(name = "image_url", length = 300)
-    private String imageUrl;
+    @Column(name = "url", nullable = false)
+    private String url;
+
     @ManyToOne
     @JoinColumn(name="product_id")
     private Product product;

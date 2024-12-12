@@ -3,7 +3,6 @@ package com.project.harmonie_e_commerce.service;
 import com.project.harmonie_e_commerce.dto.ProductDTO;
 import com.project.harmonie_e_commerce.dto.ProductImageDTO;
 import com.project.harmonie_e_commerce.exception.DataNotFoundException;
-import com.project.harmonie_e_commerce.model.Cart;
 import com.project.harmonie_e_commerce.model.Product;
 import com.project.harmonie_e_commerce.model.ProductImage;
 import com.project.harmonie_e_commerce.model.ProductInCart;
@@ -16,16 +15,14 @@ import org.springframework.data.domain.PageRequest;
 import java.util.List;
 
 public interface ICartService {
-    CartResponse createCart();
-    CartResponse getCartById(Long cart_id) throws Exception;
-    List<ProductInCartResponse> getAllProductsInCart(Long cartId) throws Exception;
+    List<ProductInCartResponse> getAllProductsInCart(Integer userId) throws Exception;
 
-    void deleteItemInCart(Long product_id, Long cartId) throws Exception;
+    void deleteItemInCart(Integer product_id, Integer userId) throws Exception;
 
-    CartResponse addProductToCart(Long product_id, Long cart_id) throws Exception;
+    ProductInCart addProductToCart(Integer product_id, Integer userId) throws Exception;
 
-    ProductInCart updateQuantityProductinCart(Long product_id, Long cart_id, Integer newQuantity) throws  Exception;
+    ProductInCart updateQuantityProductinCart(Integer product_id, Integer cart_id, Integer newQuantity) throws  Exception;
 
-    Float getTotalPrice(Long cartId);
+//    Float getTotalPrice(Integer userId) throws Exception;
 
 }
