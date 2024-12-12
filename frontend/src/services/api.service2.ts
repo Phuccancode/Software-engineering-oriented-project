@@ -1,5 +1,5 @@
 import axios from './axios.customize';
-    const accessToken = 'eyJhbGciOiJIUzUxMiJ9.eyJlbWFpbCI6InRyYW5ob25ncGh1Y0BnbWFpbC5jb20iLCJzdWIiOiJ0cmFuaG9uZ3BodWNAZ21haWwuY29tIiwiZXhwIjoxNzMzOTczODQwfQ.BNTAgbeezBZu4BWpZUWqhtXTuxJR--kHirt-mYAogdZU7s5qa1RpEd95iM1w-ygBXIf55uX_E_I-cuavuHYccg'; 
+    const accessToken = ''; 
 
 const fetchCartItemsAPI = async () => {
     const URL_BACKEND = "/api/v1/productincart/1";
