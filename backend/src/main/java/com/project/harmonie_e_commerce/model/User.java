@@ -64,6 +64,8 @@ public class User implements UserDetails {
         USER
     }
 
+    private String codeVerify;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();

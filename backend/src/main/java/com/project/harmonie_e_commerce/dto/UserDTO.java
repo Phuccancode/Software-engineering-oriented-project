@@ -1,5 +1,6 @@
 package com.project.harmonie_e_commerce.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
@@ -14,6 +15,7 @@ import java.sql.Date;
 @NoArgsConstructor
 public class UserDTO {
     @NotBlank(message = "Full name is required")
+    @JsonProperty("full_name")
     private String fullName;
     private Date dob;
     @Enumerated(EnumType.STRING)

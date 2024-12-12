@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS users (
 	email           VARCHAR(50)    	UNIQUE                      NOT NULL,
 	creation_date   TIMESTAMP       DEFAULT CURRENT_TIMESTAMP   NOT NULL,
 	password 		VARCHAR(65) 								NOT NULL,
+	code_verify        VARCHAR(6)									DEFAULT NULL,
     role			ENUM ('ADMIN','USER') 	default				'USER'
 );
 

@@ -1,9 +1,6 @@
 package com.project.harmonie_e_commerce.controller;
 
-import com.project.harmonie_e_commerce.dto.ProfileDTO;
-import com.project.harmonie_e_commerce.dto.ResetPasswordDTO;
-import com.project.harmonie_e_commerce.dto.UserDTO;
-import com.project.harmonie_e_commerce.dto.UserLoginDTO;
+import com.project.harmonie_e_commerce.dto.*;
 import com.project.harmonie_e_commerce.model.User;
 import com.project.harmonie_e_commerce.response.StringResponse;
 import com.project.harmonie_e_commerce.service.IUserService;
@@ -107,5 +104,15 @@ public class UserController {
         }
         token = token.substring(7);
         return ResponseEntity.ok(userService.updatePassword(resetPasswordDTO,token));
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@Valid @RequestBody ForgotPasswordDTO forgotPasswordDTO) {
+        return ResponseEntity.ok(userService.forgotPassword(forgotPasswordDTO));
+    }
+
+    @PutMapping("/update-password")
+    public ResponseEntity<?> updatePasswordByCode(@Valid @RequestBody UpdatePasswordDTO updatePasswordDTO) {
+        return ResponseEntity.ok(userService.updatePasswordByCode(updatePasswordDTO));
     }
 }

@@ -1,8 +1,6 @@
 package com.project.harmonie_e_commerce.service;
 
-import com.project.harmonie_e_commerce.dto.ProfileDTO;
-import com.project.harmonie_e_commerce.dto.ResetPasswordDTO;
-import com.project.harmonie_e_commerce.dto.UserDTO;
+import com.project.harmonie_e_commerce.dto.*;
 import com.project.harmonie_e_commerce.exception.DataNotFoundException;
 import com.project.harmonie_e_commerce.model.User;
 import com.project.harmonie_e_commerce.response.GetUserResponse;
@@ -20,4 +18,8 @@ public interface IUserService {
     StringResponse updateProfile(ProfileDTO profileDTO, String token);
 
     StringResponse updatePassword(ResetPasswordDTO resetPasswordDTO,String token);
+
+    StringResponse forgotPassword(ForgotPasswordDTO forgotPasswordDTO);
+
+    StringResponse updatePasswordByCode(UpdatePasswordDTO updatePasswordDTO);
 }

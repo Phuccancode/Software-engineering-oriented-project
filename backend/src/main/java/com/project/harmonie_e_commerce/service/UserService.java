@@ -1,15 +1,15 @@
 package com.project.harmonie_e_commerce.service;
 
 import com.project.harmonie_e_commerce.component.JwtTokenUtil;
-import com.project.harmonie_e_commerce.dto.ProfileDTO;
-import com.project.harmonie_e_commerce.dto.ResetPasswordDTO;
-import com.project.harmonie_e_commerce.dto.UserDTO;
+import com.project.harmonie_e_commerce.dto.*;
 import com.project.harmonie_e_commerce.exception.DataNotFoundException;
 import com.project.harmonie_e_commerce.model.User;
 import com.project.harmonie_e_commerce.repository.UserRepository;
 import com.project.harmonie_e_commerce.response.GetUserResponse;
+import com.project.harmonie_e_commerce.response.RestResponse;
 import com.project.harmonie_e_commerce.response.StringResponse;
 import com.project.harmonie_e_commerce.util.JwtUtils;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +28,7 @@ public class UserService implements IUserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
+    private final EmailService emailService;
 
     @Override
     public User createUser(UserDTO userDTO) {
@@ -142,4 +144,55 @@ public class UserService implements IUserService {
         userRepository.save(user);
         return new StringResponse("Cap nhat mat khau thanh cong");
     }
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public StringResponse forgotPassword(ForgotPasswordDTO forgotPasswordDTO) {
+        User user = userRepository.findByEmail(forgotPasswordDTO.getUsername()).orElseThrow(
+                () -> new DataNotFoundException("User not found with email " + forgotPasswordDTO.getUsername())
+        );
+        Random random = new Random();
+        String code_verify = String.format("%06d", random.nextInt(1000000));
+        user.setCodeVerify(code_verify);
+        userRepository.save(user);
+        EmailDTO newEmail = new EmailDTO(user.getUsername(),
+                "[Harmonie - E Commerce System] Reset your password",
+                "Dear " + user.getFullName() + ",\n\n"
+                        + "We noticed that you forgot your login password and you are requesting a new password for the account associated with "
+                        + user.getUsername() + ".\n\n"
+                        + "Your code verify is: " + code_verify + "\n\n"
+                        + "Please use this code to reset your password. If you did not request this, please ignore this email.\n\n"
+                        + "\n\n"
+                        + "Best regards,\n"
+                        + "Harmonie - E Commerce System");
+        this.emailService.sendEmail(newEmail);
+
+        return new StringResponse("Send code verify to email successfully");
+    }
+    @Override
+    public StringResponse updatePasswordByCode(UpdatePasswordDTO updatePasswordDTO) {
+        User user = getUserByUsernameAndCodeVerify(updatePasswordDTO.getUsername(),
+                updatePasswordDTO.getCodeVerify());
+        String hashPassword = this.passwordEncoder.encode(updatePasswordDTO.getNewPassword());
+        user.setPassword(hashPassword);
+        user.setCodeVerify(null);
+        userRepository.save(user);
+        return new StringResponse( "Update password successfully");
+    }
+    public User getUserByUsernameAndCodeVerify(String username, String codeVerify) {
+        return userRepository.findByEmailAndCodeVerify(username, codeVerify).orElseThrow(
+                () -> new DataNotFoundException
+                        ("User not found with username " + username + " and code verify " + codeVerify));
+    }
+
 }
+
