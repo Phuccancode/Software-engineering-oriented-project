@@ -77,6 +77,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 Pair.of(apiPrefix+"/users/update-password", "PUT"),
                 Pair.of(apiPrefix+"/products", "GET"),
                 Pair.of(apiPrefix+"/categories", "GET"),
+                Pair.of(apiPrefix+"/categories/**", "GET"),
                 Pair.of(apiPrefix+"/users/login-social", "POST"),
                 Pair.of("/images/", "GET")
         );
