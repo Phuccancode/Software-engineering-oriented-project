@@ -1,5 +1,5 @@
 import axios from './axios.customize';
-    const accessToken = ''; 
+    const accessToken = localStorage.getItem('access_token'); 
 
 const fetchCartItemsAPI = async () => {
     const URL_BACKEND = "/api/v1/productincart/1";
