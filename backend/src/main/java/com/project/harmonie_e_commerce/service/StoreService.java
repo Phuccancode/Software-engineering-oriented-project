@@ -6,6 +6,8 @@ import com.project.harmonie_e_commerce.model.*;
 import com.project.harmonie_e_commerce.repository.*;
 import com.project.harmonie_e_commerce.response.*;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -25,6 +27,7 @@ public class StoreService implements IStoreService {
     private final BoxRepository boxRepository;
     private final StoreDiscountRepository storeDiscountRepository;
     private final ProductInBoxRepository productInBoxRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Store addNewStore(StoreDTO storeDTO, Integer userId) {
@@ -152,11 +155,23 @@ public class StoreService implements IStoreService {
     }
 
     @Override
-    public StringResponse deleteStore(Integer store_id) {
+    public StringResponse deleteStore(Integer store_id,String password) {
         Store store = storeRepository.findById(store_id).orElseThrow(
                 () -> new DataNotFoundException("Store not found by id " + store_id)
         );
+
+        if (!passwordEncoder.matches(password, store.getUser().getPassword())) {
+            throw new BadCredentialsException("Password is incorrect");
+        }
+
         storeRepository.delete(store);
         return new StringResponse("Delete successfully");
+    }
+
+    @Override
+    public Store getInfo(Integer store_id) {
+        return storeRepository.findById(store_id).orElseThrow(
+                () -> new DataNotFoundException("Store not found by id " + store_id)
+        );
     }
 }

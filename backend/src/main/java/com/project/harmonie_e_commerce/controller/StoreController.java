@@ -26,6 +26,32 @@ public class StoreController {
             return new ResponseEntity<>(storeService.addNewStore(dto,user_id), HttpStatus.OK);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<?> updateStore(
+            @RequestBody StoreDTO dto,
+            HttpServletRequest request
+    ){
+        Integer store_id = extractToken.getIdFromToken(request);
+        return new ResponseEntity<>(storeService.updateStore(dto,store_id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteStore(
+            HttpServletRequest request,
+            @RequestParam String password
+    ){
+        Integer store_id = extractToken.getIdFromToken(request);
+        return new ResponseEntity<>(storeService.deleteStore(store_id,password), HttpStatus.OK);
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<?> getInfo(
+            HttpServletRequest request
+    ){
+        Integer store_id = extractToken.getIdFromToken(request);
+        return new ResponseEntity<>(storeService.getInfo(store_id), HttpStatus.OK);
+    }
+
     @GetMapping("/all/product")
     public ResponseEntity<?> showAllProduct(
             HttpServletRequest request

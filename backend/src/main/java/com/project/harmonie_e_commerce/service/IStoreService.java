@@ -22,6 +22,8 @@ public interface IStoreService{
 
     Store updateStore(StoreDTO storeDTO,Integer store_id);
 
-    StringResponse deleteStore(Integer store_id);
+    StringResponse deleteStore(Integer store_id,String password);
+
+    Store getInfo(Integer store_id);
 
 }

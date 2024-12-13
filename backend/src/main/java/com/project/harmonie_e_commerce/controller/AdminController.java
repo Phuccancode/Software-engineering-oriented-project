@@ -29,12 +29,12 @@ public class AdminController {
         return ResponseEntity.ok(storeService.updateStore(storeDTO,store_id));
     }
 
-    @DeleteMapping("/store/{store_id}")
-    public ResponseEntity<?> deleteStore(
-            @PathVariable Integer store_id
-    ){
-        return ResponseEntity.ok(storeService.deleteStore(store_id));
-    }
+//    @DeleteMapping("/store/{store_id}")
+//    public ResponseEntity<?> deleteStore(
+//            @PathVariable Integer store_id
+//    ){
+//        return ResponseEntity.ok(storeService.deleteStore(store_id));
+//    }
 
     @GetMapping("/user")
     public ResponseEntity<?> getAllUser(){

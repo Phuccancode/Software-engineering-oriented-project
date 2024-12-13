@@ -63,4 +63,28 @@ public class DiscountController {
             Integer store_id = extractToken.getIdFromToken(request);
             return new ResponseEntity<>(discountService.createStoreDiscount(store_id,dto), HttpStatus.OK);
     }
+
+    @GetMapping("store_discount")
+    public ResponseEntity<?> getStoreDiscount(
+            HttpServletRequest request
+    ){
+        Integer store_id = extractToken.getIdFromToken(request);
+        return new ResponseEntity<>(discountService.getAllStoreDiscount(store_id), HttpStatus.OK);
+    }
+
+    @PutMapping("store_discount/{id}")
+    public ResponseEntity<?> updateStoreDiscount(
+            @RequestBody StoreDiscountDTO dto,
+            @PathVariable Integer id
+    ){
+        return new ResponseEntity<>(discountService.updateStoreDiscount(id,dto), HttpStatus.OK);
+    }
+
+    @DeleteMapping("store_discount/{id}")
+    public ResponseEntity<?> deleteStoreDiscount(
+            @PathVariable Integer id
+    ){
+        return new ResponseEntity<>(discountService.deleteStoreDiscount(id), HttpStatus.OK);
+    }
+
 }
