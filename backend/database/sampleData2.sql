@@ -1,6 +1,6 @@
 USE Harmonie;
 
-INSERT INTO users (fname, lname, dob, sex, phone, email, password)
+INSERT INTO users (full_name, dob, sex, phone, email, password)
 VALUES
     ('John', 'Doe', '1990-05-15', 'M', '1234567890', 'john.doe@example.com', 'password123'),
     ('Alice', 'Smith', '1985-08-25', 'M', '0987654321', 'alice.smith@example.com', 'password456'),

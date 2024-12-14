@@ -47,6 +47,8 @@ public class WebSecurityConfig {
                             .requestMatchers(HttpMethod.GET,"/images/").permitAll()
                             .requestMatchers(HttpMethod.GET,"/images").permitAll()
 
+                            .requestMatchers(HttpMethod.GET,"/api/v1/payment/**").permitAll()
+
                             .requestMatchers("/api/v1/**").hasAuthority("ROLE_USER")
 //                            .requestMatchers("**").permitAll();
                             .anyRequest().authenticated();

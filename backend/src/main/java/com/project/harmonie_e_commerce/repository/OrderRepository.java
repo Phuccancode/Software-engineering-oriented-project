@@ -14,4 +14,5 @@ import org.springframework.data.jpa.repository.Query;
 public interface OrderRepository extends JpaRepository<Order, Integer>{
     @Query("SELECT O FROM Order O WHERE O.deliveryInformation.user.id = :user_id")
     List<Order> findByUserIdThroughConsigneeInfomation(@Param("user_id") Integer user_id);
+//    List<Order> findByConsigneeInformationUserId(Integer userId);
 }

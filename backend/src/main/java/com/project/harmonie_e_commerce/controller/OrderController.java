@@ -1,5 +1,6 @@
 package com.project.harmonie_e_commerce.controller;
 
+import com.project.harmonie_e_commerce.response.PaymentResponse;
 import com.project.harmonie_e_commerce.service.ExtractToken;
 import com.project.harmonie_e_commerce.service.OrderService;
 
@@ -59,7 +60,7 @@ public class OrderController {
    @PostMapping("")
    public ResponseEntity<?> createOrder(HttpServletRequest request,
    @Valid @RequestBody OrderDTO orderRequest){
-        Map<String, Integer> respone = orderService.createOrder(request, orderRequest);
+        PaymentResponse respone = orderService.createOrder(request, orderRequest);
         return ResponseEntity.ok(respone);
    }
 

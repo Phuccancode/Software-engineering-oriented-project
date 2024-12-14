@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS orders (
 	total_price     	 	DECIMAL(10,2)                               NOT NULL,
 	system_discount_id		INT             DEFAULT NULL,
 	pay_method       		ENUM('Cash', 'Credit', 'Debit')             NOT NULL,
-
+    status          		ENUM('Pending', 'Paid')     DEFAULT 'Pending',
 
 	FOREIGN KEY (consignee_information_id) REFERENCES delivery_informations(id),
 	FOREIGN KEY (system_discount_id) REFERENCES system_discounts(id)

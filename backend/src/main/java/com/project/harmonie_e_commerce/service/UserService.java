@@ -3,8 +3,11 @@ package com.project.harmonie_e_commerce.service;
 import com.project.harmonie_e_commerce.component.JwtTokenUtil;
 import com.project.harmonie_e_commerce.dto.*;
 import com.project.harmonie_e_commerce.exception.DataNotFoundException;
+import com.project.harmonie_e_commerce.model.Order;
 import com.project.harmonie_e_commerce.model.User;
+import com.project.harmonie_e_commerce.repository.OrderRepository;
 import com.project.harmonie_e_commerce.repository.UserRepository;
+import com.project.harmonie_e_commerce.response.ExpenseResponse;
 import com.project.harmonie_e_commerce.response.GetUserResponse;
 import com.project.harmonie_e_commerce.response.RestResponse;
 import com.project.harmonie_e_commerce.response.StringResponse;
@@ -18,8 +21,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.Random;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +35,7 @@ public class UserService implements IUserService {
         private final PasswordEncoder passwordEncoder;
         private final AuthenticationManager authenticationManager;
         private final JwtTokenUtil jwtTokenUtil;
+        private final OrderRepository orderRepository;
         private final EmailService emailService;
 
         @Override
@@ -178,6 +186,28 @@ public class UserService implements IUserService {
                 return userRepository.findByEmailAndCodeVerify(username, codeVerify).orElseThrow(
                                 () -> new DataNotFoundException("User not found with username " + username
                                                 + " and code verify " + codeVerify));
+        }
+
+        @Override
+        public List<ExpenseResponse> getUserExpenses(String token) {
+                String email = JwtUtils.decodeWebToken(token).get("email");
+                User user = userRepository.findByEmail(email).orElseThrow(
+                                () -> new DataNotFoundException("User not found with email " + email));
+                List<ExpenseResponse> expenses = new ArrayList<>();
+                List<Order> orders = orderRepository.findByUserIdThroughConsigneeInfomation(user.getId());
+                for (Order order : orders) {
+                        Float total = order.getTotalPrice();
+                        expenses.add(ExpenseResponse.builder()
+                                        .id(order.getId())
+                                        .amount(new BigDecimal(Float.toString(total)))
+                                        // .date(order.getCreationDate().getTime())
+                                        .date(LocalDateTime.ofInstant(
+                                                        Instant.ofEpochMilli(order.getCreationDate().getTime()),
+                                                        ZoneId.systemDefault()).toLocalDate())
+
+                                        .build());
+                }
+                return expenses;
         }
 
 }

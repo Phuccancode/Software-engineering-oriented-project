@@ -30,6 +30,8 @@ public class BoxResponse {
     @JsonProperty("products")
     private List<ProductInBoxRespone> productInBoxList;
 
+    @JsonProperty("order_id")
+    private Integer orderId;
     @JsonProperty("fee_ship")
     private Float feeShip;
     @JsonProperty("total_price")
@@ -57,6 +59,7 @@ public class BoxResponse {
                 .shipperPhone(box.getShipperPhone())
                 .totalPrice(box.getTotalPrice())
                 .feeShip(box.getFeeShip())
+                .orderId(box.getOrder().getId())
                 .predictedDeliveryDate(box.getPredictedDeliveryDate())
                 .caution(box.getCaution())
                 .packingDate(box.getPackingDate())
@@ -67,7 +70,7 @@ public class BoxResponse {
     public static List<BoxResponse> fromBoxList(List<Box> boxList, ProductInBoxRepository productInBoxRepository) {
         List<BoxResponse> boxResponseList = new ArrayList<>();
 
-        for(Box box : boxList) {
+        for (Box box : boxList) {
             boxResponseList.add(BoxResponse.fromBox(box, productInBoxRepository));
         }
 

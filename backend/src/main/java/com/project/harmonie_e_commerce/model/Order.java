@@ -36,9 +36,13 @@ public class Order {
     @JoinColumn(name = "system_discount_id")
     private SystemDiscount systemDiscount;
 
+
+    private String status;
+
     public enum PayMethod{
         Cash,
         Credit,
         Debit
     }
+
 }
