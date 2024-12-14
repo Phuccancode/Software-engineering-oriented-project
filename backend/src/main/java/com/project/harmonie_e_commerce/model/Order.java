@@ -13,18 +13,16 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(
-        name = "orders"
-)
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "creation_date",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "creation_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp creationDate;
-    @Column(name = "total_price", columnDefinition = "DECIMAL(10,2)")
+    @Column(name = "total_price", columnDefinition = "DECIMAL(15,2)")
     private Float totalPrice;
-    @Column(name = "pay_method",nullable = false)
+    @Column(name = "pay_method", nullable = false)
     @Enumerated(EnumType.STRING)
     private PayMethod payMethod;
 
@@ -36,10 +34,9 @@ public class Order {
     @JoinColumn(name = "system_discount_id")
     private SystemDiscount systemDiscount;
 
-
     private String status;
 
-    public enum PayMethod{
+    public enum PayMethod {
         Cash,
         Credit,
         Debit

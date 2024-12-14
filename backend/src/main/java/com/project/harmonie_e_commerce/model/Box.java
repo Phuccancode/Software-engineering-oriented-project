@@ -17,9 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(
-        name = "boxes"
-)
+@Table(name = "boxes")
 public class Box {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,16 +39,16 @@ public class Box {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @Column(name = "shipper_name", length = 50,nullable = false)
+    @Column(name = "shipper_name", length = 50, nullable = false)
     private String shipperName;
 
-    @Column(name = "shipper_phone", length = 10,nullable = false)
+    @Column(name = "shipper_phone", length = 10, nullable = false)
     private String shipperPhone;
 
-    @Column(name = "total_price", columnDefinition = "DECIMAL(10,2)", nullable = false)
+    @Column(name = "total_price", columnDefinition = "DECIMAL(15,2)", nullable = false)
     private Float totalPrice;
-    
-    @Column(name = "fee_ship", columnDefinition = "DECIMAL(10,2)", nullable = false)
+
+    @Column(name = "fee_ship", columnDefinition = "DECIMAL(15,2)", nullable = false)
     private Float feeShip;
 
     @Column(name = "predicted_delivery_date")
@@ -66,11 +64,10 @@ public class Box {
     @Enumerated(EnumType.STRING)
     private BoxStatus status;
 
-
     @OneToMany(mappedBy = "box", cascade = CascadeType.ALL)
     private List<ProductInBox> products;
 
-    public enum BoxStatus{
+    public enum BoxStatus {
         Pending, Shipped, Delivered
     }
 }

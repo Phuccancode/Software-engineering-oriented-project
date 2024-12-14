@@ -31,9 +31,6 @@ public class BoxResponse {
     private StoreResponse store;
     @JsonProperty("products")
     private List<ProductInBoxRespone> productInBoxList;
-
-    @JsonProperty("order_id")
-    private Integer orderId;
     @JsonProperty("fee_ship")
     private Float feeShip;
     @JsonProperty("total_price")

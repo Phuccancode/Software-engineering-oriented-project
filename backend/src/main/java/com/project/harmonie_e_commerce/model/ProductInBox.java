@@ -11,9 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(
-        name = "products_in_boxes"
-)
+@Table(name = "products_in_boxes")
 public class ProductInBox {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +28,6 @@ public class ProductInBox {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(name = "total_price", columnDefinition = "DECIMAL(10,2)")
+    @Column(name = "total_price", columnDefinition = "DECIMAL(15,2)")
     private Float totalPrice;
 }

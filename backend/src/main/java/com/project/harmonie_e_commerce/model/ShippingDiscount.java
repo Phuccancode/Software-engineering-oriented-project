@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @Builder
 @Table(name = "shipping_discounts")
-public class ShippingDiscount{
+public class ShippingDiscount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "max_amount", columnDefinition = "DECIMAL(10,2)",nullable = false)
+    @Column(name = "max_amount", columnDefinition = "DECIMAL(15,2)", nullable = false)
     private Float maxAmount;
 
     @OneToOne

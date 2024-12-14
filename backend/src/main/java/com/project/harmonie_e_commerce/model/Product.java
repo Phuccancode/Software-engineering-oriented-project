@@ -1,6 +1,5 @@
 package com.project.harmonie_e_commerce.model;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,7 +24,7 @@ public class Product {
     @Column(name = "brand", length = 20)
     private String brand;
 
-    @Column(name = "price", nullable = false, columnDefinition = "DECIMAL(10,2)")
+    @Column(name = "price", nullable = false, columnDefinition = "DECIMAL(15,2)")
     private Float price;
 
     @Column(name = "quantity")
@@ -54,7 +53,7 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public enum ProductStatus{
+    public enum ProductStatus {
         enable,
         disable
     }

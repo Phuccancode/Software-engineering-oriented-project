@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "store_discounts")
-public class StoreDiscount{
+public class StoreDiscount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -21,7 +21,7 @@ public class StoreDiscount{
     @JoinColumn(name = "discount_id", referencedColumnName = "id")
     private Discount discount;
 
-    @Column(name = "amount",nullable = false, columnDefinition = "DECIMAL(10,2)")
+    @Column(name = "amount", nullable = false, columnDefinition = "DECIMAL(15,2)")
     private Float amount;
 
     @ManyToOne

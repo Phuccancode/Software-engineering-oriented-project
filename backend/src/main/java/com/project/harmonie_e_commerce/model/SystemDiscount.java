@@ -14,7 +14,7 @@ import org.hibernate.annotations.Check;
 @Entity
 @Table(name = "system_discounts")
 @Check(constraints = "percentage BETWEEN 0 AND 100")
-public class SystemDiscount{
+public class SystemDiscount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -23,10 +23,10 @@ public class SystemDiscount{
     @JoinColumn(name = "discount_id")
     private Discount discount;
 
-    @Column(name = "max_amount", columnDefinition = "DECIMAL(10,2)", nullable = false)
+    @Column(name = "max_amount", columnDefinition = "DECIMAL(15,2)", nullable = false)
     private Float maxAmount;
     @Column(name = "percentage", nullable = false)
     private Integer percentage;
-    @Column(name = "min_bill_amt", columnDefinition = "DECIMAL(10,2) DEFAULT 0", nullable = false)
+    @Column(name = "min_bill_amt", columnDefinition = "DECIMAL(15,2) DEFAULT 0", nullable = false)
     private Float minBillAmount;
 }
