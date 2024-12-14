@@ -1,0 +1,157 @@
+.Container {
+    background-color: #fff;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    flex-direction: column;
+    position: relative;
+    top: 12%;
+    flex-grow: 1;
+    flex-basis: 0;
+    padding: 50px 70px 96px 70px;
+    width: 1287px;
+    height: 600px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1350px) {
+    .Container {
+        max-width: 100%;
+        padding: 0 20px;
+        width: 'fit-content';
+        height: 100vh;
+    }
+}
+
+.contentWrapper {
+    display: flex;
+    gap: 20px;
+}
+
+@media (max-width: 991px) {
+    .contentWrapper {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .Container {
+        width: 100%;
+        height: 100vh;
+        top: 0%;
+    }
+}
+
+.titleColumn {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 28%;
+    margin-left: 0;
+}
+
+@media (max-width: 991px) {
+    .titleColumn {
+        width: 100%;
+    }
+}
+
+.Title {
+    color: #000;
+    color: #000;
+    font-size: 50px;
+    font-style: normal;
+    line-height: 100%;
+    position: relative;
+    top: 20%;
+    left: 10%;
+    /* 64px */
+    letter-spacing: var(--Display-Large-Tracking, -0.25px);
+}
+
+@media (max-width: 991px) {
+    .Title {
+        margin-top: 60px;
+        text-align: center;
+        font-size: 40px;
+        line-height: 44px;
+    }
+}
+
+.imageColumn {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 72%;
+    margin-left: 20px;
+}
+
+@media (max-width: 991px) {
+    .imageColumn {
+        width: 100%;
+    }
+}
+
+.Image {
+    aspect-ratio: 1.73;
+    object-fit: contain;
+    object-position: center;
+    width: 100%;
+    flex-grow: 1;
+}
+
+@media (max-width: 991px) {
+    .Image {
+        max-width: 100%;
+        margin-top: 40px;
+    }
+}
+
+.actionContainer {
+    justify-content: space-between;
+    border-radius: 0;
+    display: flex;
+    margin-top: 20px;
+
+}
+
+@media (max-width: 991px) {
+    .actionContainer {
+        max-width: 100%;
+        margin: 40px 40px 0;
+        flex-direction: column;
+    }
+
+    .actionButton {
+        border-radius: 0;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width: 90%;
+    }
+}
+
+.actionButton {
+    background-color: #4260fc;
+    color: #000;
+    text-align: center;
+    padding: 16px 70px;
+    height: 56px;
+    font: 700 20px League Spartan, -apple-system, Roboto, Helvetica, sans-serif;
+    cursor: pointer;
+}
+
+@media (max-width: 991px) {
+    .actionButton {
+        padding: 0 20px;
+    }
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

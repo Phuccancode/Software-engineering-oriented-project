@@ -1,0 +1,96 @@
+.addressSection {
+    background-color: #fff;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 1240px;
+    overflow: hidden;
+    font-family: Lato, sans-serif;
+    padding: 17px 1px 0;
+    border: 1px solid #000;
+    margin-top: 78px;
+  }
+  
+  .sectionTitle {
+    color: #000;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.72px;
+    text-align: center;
+    margin-left: 15px;
+  }
+  
+  .addressInfo {
+    background-color: #efecec;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    margin-top: 13px;
+    
+    gap: 20px;
+    overflow: hidden;
+    font-weight: 400;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1240px;
+    padding: 22px 40px;
+  }
+  
+  .userDetails {
+    color: #000;
+    font-size: 20px;
+    line-height: 20px;
+    letter-spacing: -0.6px;
+  }
+  
+  .addressDetails {
+    display: flex;
+    gap: 40px;
+    font-size: 16px;
+    letter-spacing: -0.48px;
+    line-height: 1;
+    max-width: 1000px;
+  }
+  
+  .addressText {
+    color: #000;
+    font-size: 20px;
+    letter-spacing: -0.6px;
+    flex-grow: 1;
+  }
+  
+  .defaultTag {
+    background-color: #fff;
+    color: #4260fc;
+    text-align: center;
+    padding: 8px 18px;
+    border: 2px solid #4260fc;
+  }
+  
+  .changeButton {
+    color: #f00;
+    line-height: 16px;
+    text-align: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  @media (max-width: 991px) {
+    .addressSection {
+      max-width: 100%;
+      margin-top: 40px;
+    }
+  
+    .sectionTitle {
+      margin-left: 10px;
+    }
+  
+    .addressInfo {
+      padding: 20px;
+    }
+  
+    .addressDetails {
+      max-width: 100%;
+    }
+  }

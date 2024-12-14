@@ -1,0 +1,285 @@
+/* Reset mặc định */
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Tổng quan cho container chính */
+.managerContainer {
+    display: flex; /* Sử dụng flex để căn chỉnh Sidebar và nội dung chính */
+    height: 100vh; /* Chiều cao của trang luôn bằng chiều cao trình duyệt */
+    overflow: hidden; /* Loại bỏ thanh cuộn không cần thiết */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px; /* Chiều rộng cố định cho Sidebar */
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 100%; /* Sidebar luôn chiếm 100% chiều cao */
+    flex-shrink: 0; /* Đảm bảo Sidebar không co lại */
+    display: flex;
+    flex-direction: column;
+    padding: 45px 0;
+}
+
+.sidebarContent {
+    flex-grow: 1; /* Sidebar có thể co giãn nếu cần */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Căn chỉnh các item theo chiều dọc */
+}
+
+.sidebarItem {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+    color: #000;
+    font-size: 18px;
+}
+
+.sidebarItem:hover {
+    background-color: #f0f0f0;
+}
+
+.sidebarIcon {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+}
+
+.sidebarText {
+    flex-grow: 1;
+}
+
+.activeItem {
+    color: #4260fc;
+    font-weight: bold;
+    background-color: #e8ecfc;
+    border-left: 5px solid #4260fc;
+}
+
+/* Main content */
+.mainContent {
+    flex: 1; /* Phần nội dung chính chiếm toàn bộ không gian còn lại */
+    padding: 50px 30px;
+    overflow-y: auto; /* Cuộn nếu nội dung quá dài */
+    background-color: #f9f9f9;
+}
+
+/* Thẻ thông tin (Card) */
+.infoCard {
+    width: 100%;
+    max-width: 1200px; /* Giới hạn chiều rộng */
+    margin: 20px auto; /* Căn giữa nội dung */
+    padding: 20px 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+/* Tiêu đề của thẻ thông tin */
+.infoTitle {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Các dòng thông tin */
+.infoRow {
+    display: flex;
+    flex-direction: column; /* Chuyển hướng từ hàng ngang sang cột dọc */
+    gap: 20px; /* Tạo khoảng cách giữa các trường */
+    margin-bottom: 20px;
+    width: 100%; /* Đảm bảo độ rộng toàn phần */
+}
+
+.infoLabel {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px; /* Khoảng cách giữa nhãn và ô nhập */
+}
+
+.infoValue {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 16px;
+    color: #333;
+    width: 100%; /* Chiều rộng ô nhập liệu đầy đủ */
+    max-width: 400px; /* Giới hạn chiều rộng tối đa */
+}
+
+
+
+/* Nút hành động */
+.submitButton {
+    background-color: #4260fc;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.submitButton:hover {
+    background-color: #3248c8;
+}
+
+/* Bảng (Table) */
+.Table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.TableHeader {
+    background-color: #4260fc;
+    color: #fff;
+    text-align: left;
+}
+
+.TableHeader th {
+    padding: 12px 15px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.TableBody td {
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: center;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+.TableBody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.TableBody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.actionButton {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.editButton {
+    background-color: #feb10b;
+    color: #fff;
+}
+
+.editButton:hover {
+    background-color: #e59e09;
+}
+
+.deleteButton {
+    background-color: #f43939;
+    color: #fff;
+}
+
+.deleteButton:hover {
+    background-color: #d22f2f;
+}
+/* Bảng */
+.Table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.TableHeader {
+    background-color: #4260fc;
+    color: #fff;
+    text-align: left;
+}
+
+.TableHeader th {
+    padding: 12px 15px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.TableBody td {
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: center;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+.TableBody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.TableBody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Nút hành động */
+.actionButton {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.editButton {
+    background-color: #feb10b;
+    color: #fff;
+}
+
+.editButton:hover {
+    background-color: #e59e09;
+}
+
+.deleteButton {
+    background-color: #f43939;
+    color: #fff;
+}
+
+.deleteButton:hover {
+    background-color: #d22f2f;
+}
+
+/* Nút thêm cửa hàng */
+.submitButton {
+    background-color: #4260fc;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 20px;
+}
+
+.submitButton:hover {
+    background-color: #3248c8;
+}

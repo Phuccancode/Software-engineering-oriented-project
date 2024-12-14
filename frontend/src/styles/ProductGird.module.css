@@ -1,0 +1,164 @@
+.container {
+    background-color: #f3f6f4;
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.container_top {
+    background-color: #f3f6f4;
+    width: 100%;
+    height: 659px;
+    flex-shrink: 0;
+}
+
+.container_bottom {
+    background-color: #f3f6f4;
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.ipad {
+    width: 300x;
+    height: 341px;
+    flex-shrink: 0;
+    position: absolute;
+    top: 29%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+}
+
+.iphone {
+    width: 204px;
+    height: 265px;
+    flex-shrink: 0;
+    position: absolute;
+    top: 32%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+}
+
+.macbook {
+    width: 535px;
+    height: 376px;
+    flex-shrink: 0;
+    position: absolute;
+    top: 35%;
+    left: 65%;
+    transform: translate(-50%, -50%);
+}
+
+.watch {
+    width: 244px;
+    height: 284px;
+    flex-shrink: 0;
+    position: absolute;
+    top: 35%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+}
+
+.contaier_top_title {
+    margin-top: 50px;
+    position: absolute;
+    top: 5%;
+    left: 8%;
+}
+
+.contaier_top_title h1 {
+    top: 25%;
+    left: 50%;
+    color: #000;
+    font-family: Lato;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 64px;
+    /* 100% */
+}
+
+.contaier_top_title p {
+    top: 15%;
+    left: 25%;
+    color: rgba(0, 0, 0, 0.60);
+    font-family: Lato;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    /* 110% */
+}
+
+.contaier_top_title button {
+    background-color: #4260fc;
+    margin-top: 40px;
+    color: #fff;
+    text-align: center;
+    padding: 16px 70px;
+    font: 700 40px League Spartan, -apple-system, Roboto, Helvetica, sans-serif;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+
+@media (max-width: 991px) {
+    .container {
+        max-width: 100%;
+        padding-right: 20px;
+    }
+}
+
+.heading {
+    color: #000;
+    align-self: start;
+    font: 700 32px Lato, sans-serif;
+
+    left: 5%;
+    text-decoration: underline;
+    margin-bottom: 2%;
+    margin-left: 2%;
+
+}
+
+.productsGrid {
+    margin-top: 26px;
+    width: 100%;
+    max-width: 1347px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 1200px) {
+    .productsGrid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 950px) {
+    .productsGrid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 680px) {
+    .productsGrid {
+        grid-template-columns: repeat(1, 1fr);
+        max-width: 100%;
+    }
+}

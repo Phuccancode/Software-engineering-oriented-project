@@ -1,0 +1,194 @@
+/* PaymentMethodSection.module.css */
+
+.paymentMethodSection {
+  background-color: #fff;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 1240px;
+  overflow: hidden;
+  padding: 18px 0 43px;
+  border: 1px solid #000;
+  margin-top: 51px;
+}
+
+.sectionTitle {
+  color: #000;
+  letter-spacing: -0.72px;
+  margin-left: 17px;
+  font: 600 24px/1 Lato, sans-serif;
+}
+
+.paymentOptions {
+  background-color: #efecec;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  margin-top: 27px;
+  gap: 40px;
+  overflow: hidden;
+  padding: 23px 78px;
+  font: 400 16px/1 Lato, sans-serif;
+  align-items: center; 
+  justify-content: flex-start; /* Đảm bảo các phần tử căn về bên trái */
+}
+
+.paymentMethods {
+  display: flex;
+  gap: 20px;
+}
+
+.paymentMethod {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  color: #5e5e62;
+  text-align: center;
+  letter-spacing: -0.48px;
+  padding: 14px 6px;
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.paymentMethod.active {
+  background-color: #ffffff;
+  border-color: #4260fc;
+  color: #000000;
+}
+
+.linkBankButton {
+  color: #4260fc;
+  letter-spacing: -0.48px;
+  margin: 27px 0 0 0; /* Đảm bảo margin bên trái là 0 */
+  font: 400 16px/1 Lato, sans-serif;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  /* Loại bỏ float: right để sử dụng Flexbox hiệu quả */
+}
+
+.linkBankButton:hover {
+  color: #274b8c;
+}
+
+.bankList {
+  display: flex;
+  flex-direction: column;
+  width: 209px;
+  max-width: 100%;
+  margin: 19px 0 0 81px;
+}
+
+.bankOption {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.bankOption:hover {
+  background-color: #ffffff;
+}
+
+.bankOption.activeBank {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #fff;
+}
+
+.radio {
+  max-width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.bankIcon {
+  aspect-ratio: 1.02;
+  object-fit: contain;
+  width: 65px;
+}
+
+.bankName {
+  color: #5e5e62;
+  letter-spacing: -0.48px;
+  font: 400 16px/1 Lato, sans-serif;
+}
+
+.paymentDetails {
+  margin-top: 20px;
+  padding: 0 78px;
+}
+
+.cardDetails, .amountDetails, .bankAccountDetails {
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cardDetails h3, .amountDetails h3, .bankAccountDetails h3 {
+  margin-bottom: 10px;
+  font: 600 18px/1 Lato, sans-serif;
+}
+
+.inputField {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font: 400 16px/1 Lato, sans-serif;
+}
+
+.amountDetails p {
+  font: 500 20px/1 Lato, sans-serif;
+  color: #333;
+}
+
+.bankAccountDetails p {
+  font: 400 16px/1 Lato, sans-serif;
+  color: #555;
+}
+
+@media (max-width: 991px) {
+  .paymentMethodSection {
+    max-width: 100%;
+    margin-top: 40px;
+  }
+
+  .paymentOptions {
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+    justify-content: flex-start;
+  }
+
+  .paymentMethods {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .linkBankButton {
+    margin-right: 10px;
+    margin-left: 0;
+  }
+
+  .bankList {
+    margin-left: 20px;
+    width: 100%;
+  }
+
+  .bankOption {
+    width: 100%;
+  }
+
+  .paymentDetails {
+    padding: 20px;
+  }
+}

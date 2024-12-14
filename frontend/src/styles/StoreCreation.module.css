@@ -1,0 +1,234 @@
+.container {
+    display: flex;
+    position: relative;
+    top: 0%;
+    flex-direction: column;
+
+}
+
+
+.header {
+    display: flex;
+    gap: 25px;
+    color: #000;
+    text-align: center;
+    letter-spacing: -0.96px;
+    margin: 36px 0 0 28px;
+    font: 600 18px/1 Lato, sans-serif;
+
+}
+
+.logo {
+    aspect-ratio: 1;
+    object-fit: contain;
+    object-position: center;
+    width: 50px;
+}
+
+.title {
+    align-self: start;
+    margin-top: 17px;
+    flex-basis: auto;
+}
+
+.formContainer {
+    background-color: #fff;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    align-self: center;
+    display: flex;
+    margin-top: 50px;
+    width: 80%;
+    max-width: 1200px;
+    height: 80%;
+    flex-direction: column;
+    align-items: start;
+    padding: 72px 80px;
+    margin-bottom: 100px;
+}
+
+
+.formSection {
+    display: flex;
+    width: 100%;
+    max-width: 1102px;
+    flex-direction: column;
+    align-items: end;
+    font-family: Lato, sans-serif;
+    color: #000;
+    line-height: 1;
+}
+
+.formGroup {
+    align-self: stretch;
+    display: flex;
+    width: 100%;
+    gap: 40px 100px;
+    flex-wrap: wrap;
+}
+
+
+
+.sectionTitle {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -1.08px;
+    align-self: start;
+    margin-top: 15px;
+    flex-grow: 1;
+    width: 230px;
+}
+
+.inputGroup {
+    display: flex;
+    gap: 40px 42px;
+    font-size: 24px;
+    font-weight: 400;
+    text-align: right;
+    letter-spacing: -0.72px;
+    flex-wrap: wrap;
+}
+
+.label {
+    flex-grow: 1;
+    margin: auto 0;
+}
+
+.input {
+    border-radius: 10px;
+    display: flex;
+    width: 489px;
+    max-width: 100%;
+    height: 50px;
+    border: 1px solid #000;
+}
+
+.shippingSection {
+    display: flex;
+    margin-top: 58px;
+    width: 790px;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: end;
+    font-family: Lato, sans-serif;
+    color: #000;
+    line-height: 1;
+}
+
+
+
+.shippingHeader {
+    align-self: start;
+    display: flex;
+    width: 666px;
+    max-width: 100%;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.shippingTitle {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -1.08px;
+}
+
+.shippingMethod {
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.72px;
+    text-align: right;
+    align-self: start;
+    margin-top: 10px;
+}
+
+.shippingOption {
+    display: flex;
+    margin-top: 28px;
+    width: 250px;
+    max-width: 100%;
+    gap: 20px;
+    font-size: 24px;
+    font-weight: 400;
+    text-align: right;
+    letter-spacing: -0.72px;
+    justify-content: space-between;
+}
+
+.shippingOptionLabel {
+    margin: auto 0;
+}
+
+.checkbox {
+    aspect-ratio: 1;
+    object-fit: contain;
+    object-position: center;
+    width: 30px;
+}
+
+.submitButton {
+    background-color: #4260fc;
+    align-self: end;
+    margin-top: 39px;
+    color: #fff;
+    text-align: center;
+    letter-spacing: -0.72px;
+    padding: 18px 26px;
+    font: 400 24px/1 Lato, sans-serif;
+}
+
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.infoRow {
+    display: flex;
+    margin-top: 10px;
+    max-width: 662px;
+    gap: 40px 42px;
+    flex-wrap: wrap;
+}
+
+.infoLabel {
+    font-size: 24px;
+    text-align: right;
+    flex-grow: 1;
+    margin: auto 0;
+    flex-direction: column;
+}
+
+.infoValue {
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 22px;
+    text-align: center;
+    letter-spacing: -0.66px;
+    width: fit-content;
+    padding: 17px 19px;
+    border: 1px solid #000;
+    width: 400px;
+
+}
+
+.submitButton {
+    background-color: #4260fc;
+    align-self: flex-end;
+    margin-top: 94px;
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+    letter-spacing: -0.72px;
+    padding: 18px 26px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    top: -5%;
+}

@@ -1,0 +1,168 @@
+/* ProductSection.module.css */
+
+.productSection {
+  max-width: 1240px;
+  width: 100%;
+  margin: 60px auto 0;
+  background-color: #f9f9f9;
+  border: 2px solid #000000; /* Added border */
+  box-sizing: border-box;
+  
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #333;
+}
+
+.productHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background-color: #eee;
+  font-weight: bold;
+  border-bottom: 2px solid #ccc;
+  font-size: 1.2rem;
+}
+
+.productHeader span:nth-child(1) {
+  flex: 2; /* Sản phẩm */
+}
+
+.productHeader span:nth-child(2) {
+  flex: 2; /* Đơn giá */
+  text-align: right;
+}
+
+.productHeader span:nth-child(3) {
+  flex: 2; /* Số lượng */
+  text-align: right;
+}
+
+.productHeader span:nth-child(4) {
+  flex: 2; /* Thành tiền */
+  text-align: right;
+}
+
+.productItem {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: space-between;
+  padding: 20px 30px;
+  border: 1px solid #eee;
+  border-bottom: 1px solid #ddd;
+  flex-wrap: wrap;
+  align-items: flex-start; /* Align items to the start */
+}
+
+.productInfo {
+  display: flex;
+  align-items: center;
+  flex: 10;
+  width: 100%;
+}
+
+.productImage {
+  height: 100px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.productName {
+  font-size: 1.3rem;
+  color: #555;
+}
+
+.productVariant {
+  font-size: 1rem;
+  color: #777;
+}
+
+.productPricing {
+  display: flex;
+  flex: 7; /* Total flex for pricing */
+  justify-content: space-between;
+  margin-left: 10px;
+  gap: 30px; /* Adjust spacing between pricing elements */
+  width: 100%;
+}
+
+.productPrice {
+  flex: 1; /* Matches Đơn giá */
+  text-align: right;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.productQuantity {
+  flex: 1.5; /* Matches Số lượng */
+  text-align: right;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.productTotal {
+  flex: 2; /* Matches Thành tiền */
+  text-align: right;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.shippingSection {
+  width: 100%;
+  margin-top: 15px; /* Add space above the shipping section */
+}
+
+.extraSections {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.extraSections > :last-child {
+  margin-right: 0;
+}
+
+@media (max-width: 768px) {
+  .productHeader,
+  .productItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .productHeader span,
+  .productPrice,
+  .productQuantity,
+  .productTotal {
+    width: 100%;
+    text-align: left;
+    margin: 5px 0;
+  }
+
+  .productPricing {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .extraSections {
+    flex-direction: column;
+  }
+
+  .extraSections > * {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .extraSections > :last-child {
+    margin-bottom: 0;
+  }
+}

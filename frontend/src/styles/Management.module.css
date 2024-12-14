@@ -1,0 +1,267 @@
+.storeManagement {
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    align-items: flex-start;
+}
+
+.pageTitle {
+    display: flex;
+    gap: 20px;
+    color: #000;
+    text-align: center;
+    letter-spacing: -0.96px;
+    margin: 36px 0 0 28px;
+    font: 600 32px/1 Lato, sans-serif;
+}
+
+
+.titleIcon {
+    aspect-ratio: 1;
+    object-fit: contain;
+    width: 40px;
+}
+
+.mainContent {
+    margin-top: 38px;
+    width: 100%;
+    max-width: 1385px;
+}
+
+
+.contentWrapper {
+    gap: 20px;
+    display: flex;
+}
+
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 27%;
+    margin-left: 0;
+    margin-bottom: -2.8%;
+    margin-top: 2%;
+}
+
+
+.sidebarContent {
+    background-color: #fff;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    color: #000;
+    text-align: right;
+    letter-spacing: -0.72px;
+    margin: 0 auto;
+    padding: 51px 54px 340px 22px;
+    font: 600 24px/1 Lato, sans-serif;
+}
+
+.sidebarItem {
+    display: flex;
+    gap: 31px;
+    margin-bottom: 60px;
+}
+
+.sidebarIcon {
+    aspect-ratio: 1.1;
+    object-fit: contain;
+    width: 33px;
+}
+
+.sidebarText {
+    margin: auto 0;
+}
+
+.activeItem {
+    color: #4260fc;
+}
+
+.mainSection {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 73%;
+    margin-left: 20px;
+}
+
+
+.infoCard {
+    background-color: #fff;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    font-family: Lato, sans-serif;
+    color: #000;
+    font-weight: 400;
+    line-height: 1;
+    margin: 40px auto 0;
+    padding: 56px 66px;
+    position: relative;
+    top: 0%;
+    left: 25%;
+}
+
+
+.infoTitle {
+    font-size: 48px;
+    font-weight: 600;
+    letter-spacing: -1.44px;
+    text-align: center;
+    align-self: flex-start;
+}
+
+.infoRow {
+    display: flex;
+    margin-top: 31px;
+    width: 100%;
+    max-width: 662px;
+    gap: 40px 42px;
+    flex-wrap: wrap;
+}
+
+.infoLabel {
+    font-size: 24px;
+    letter-spacing: -0.72px;
+    text-align: right;
+    flex-grow: 1;
+    margin: auto 0;
+    flex-direction: column;
+}
+
+.infoValue {
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 22px;
+    text-align: center;
+    letter-spacing: -0.66px;
+    width: fit-content;
+    padding: 17px 19px;
+    width: 350px;
+    border: 1px solid #000;
+
+}
+
+.submitButton {
+    background-color: #4260fc;
+    align-self: flex-end;
+    margin-top: 94px;
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+    letter-spacing: -0.72px;
+    padding: 18px 26px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    left: 80%;
+    top: -5%;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.Title {
+    font-size: 48px;
+    letter-spacing: -1.44px;
+    font-weight: 600;
+    position: relative;
+    left: -50%;
+}
+
+
+.addButton {
+    border-radius: 10px;
+    background-color: #4026fc;
+    color: #fff;
+    font-size: 20px;
+    letter-spacing: -0.6px;
+    padding: 18px 7px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    left: 45%;
+
+}
+
+.Table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: -2%;
+
+}
+
+.TableHeader {
+    background-color: #4260fc;
+    color: #000;
+}
+
+.TableHeader th {
+    padding: 20px;
+    font-size: 20px;
+    letter-spacing: -0.6px;
+    text-align: center;
+}
+
+.TableBody tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+.TableBody td {
+    padding: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.actionButton {
+    border-radius: 10px;
+    padding: 8px 15px;
+    margin: 0 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.editButton {
+    background-color: #feb10b;
+    border: 1px solid #feb10b;
+    font-size: medium;
+    align-items: center;
+}
+
+.deleteButton {
+    background-color: #f43939;
+    border: 1px solid #f43939;
+    font-size: medium;
+    align-items: center;
+}
+
+.productImage {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
