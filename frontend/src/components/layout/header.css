@@ -14,3 +14,17 @@
 .ant-menu-item::after {
     border: none !important;
 }
+
+/* Header với vị trí cố định */
+.ant-menu {
+    background-color: #ffffff;
+    color: white;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+.ant-menu {
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+}

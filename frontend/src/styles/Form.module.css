@@ -90,11 +90,12 @@
 
 .inputField {
     background-color: #efecec;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     font-size: 24px;
     color: #5b5757;
     padding: 27px 32px;
+    height: 20px;
     border: none;
 }
 
@@ -109,8 +110,9 @@
 .passwordContainer {
     background-color: #efecec;
     display: flex;
-    margin-top: 23px;
+    margin-top: 10px;
     font-size: 24px;
+    height: 20px;
     color: #5b5757;
     padding: 27px 32px;
 }

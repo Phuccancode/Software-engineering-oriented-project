@@ -64,7 +64,8 @@
          return ProductResponse.fromProduct(newProduct);
      }
     private void updateNumImage(Product existingProduct){
-        String folderPath = "./src/main/resources/public/images/"+String.valueOf(existingProduct.getId()); // Thay bằng đường dẫn tới folder của bạn
+        String folderPath = Paths.get("src", "main", "resources", "public", "images", String.valueOf(existingProduct.getId())).toString();
+
         File folder = new File(folderPath);
         if (!folder.isDirectory()) {
             existingProduct.setNumImage(0);

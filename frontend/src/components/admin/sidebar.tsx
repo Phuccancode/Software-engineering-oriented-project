@@ -18,6 +18,7 @@ const Sidebar = (props: SidebarProps) => {
   const sidebarItems: SidebarItem[] = [
     { icon: "https://cdn.icon-icons.com/icons2/1580/PNG/96/2849824-basket-buy-market-multimedia-shop-shopping-store_107977.png", text: "Quản lý cửa hàng" },
     { icon: "https://cdn.icon-icons.com/icons2/1622/PNG/96/3741756-bussiness-ecommerce-marketplace-onlinestore-store-user_108907.png", text: "Quản lý khách hàng" },
+    { icon: "https://cdn-icons-png.flaticon.com/512/2603/2603910.png", text: "Quản lý danh mục" },
     
   ];
 

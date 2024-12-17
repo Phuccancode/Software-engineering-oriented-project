@@ -3,7 +3,7 @@ import Sidebar from "../components//admin/sidebar";
 import StoreManagement from "../components/admin/storemangement";
 import CustomerManagement from "../components/admin/accountmanagement";
 import styles from "../styles/admin.module.css";
-
+import CategoriesManagement from "../components/admin/categoriesmanagement";
 const ManagerPage: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
@@ -13,6 +13,8 @@ const ManagerPage: React.FC = () => {
         return <StoreManagement />;
       case 1:
         return <CustomerManagement />;
+      case 2:
+        return <CategoriesManagement />;
       default:
         return <div>Chọn mục từ Sidebar</div>;
     }

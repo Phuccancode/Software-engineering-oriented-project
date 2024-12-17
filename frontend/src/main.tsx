@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+import { StrictMode, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
@@ -10,139 +10,114 @@ import RegisterPage from './pages/register'
 import ForgotPassWordPage from './pages/forgotpassword'
 import HomePage from './pages/home'
 import ProductDetailPage from './pages/detailProduct'
-import AccountManagement from './pages/managerAccount'
-import StorePage from './pages/store'
-import CreateStore from './pages/createStore'
 import StoreManagement from './pages/managerStore'
+import CreateStore from './pages/createStore'
 import StoreDeletion from './pages/deleteStore'
 import PaymentPage from './pages/payment'
 import ShoppingCart from './pages/shoppingcart'
 import AdminPage from './pages/admin'
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <>
-      <Header
-        isLogin={true}
-      />
-      <HomePage />
-    </>
-  },
-  {
+import AccountManagement from './pages/AccountDetail'
+import StorePage from './pages/store'
+import App from './App'
+import ErrorPage from './pages/error'
+import SuccessPage from './pages/success'
 
-    path: "/login",
-    element:
-      <>
-        <Header
-          isLogin={false}
-        />
-        <LoginPage />
-      </>
-  },
-  {
-    path: "/register",
-    element: <>
-      <Header
-        isLogin={false}
-      />
-      <RegisterPage />
-    </>
 
-  },
-  {
-    path: "/forgot-password",
-    element: <>
-      <Header
-        isLogin={false}
+const Root = () => {
+  const [user, setUser] = useState<any>(null);
+  const [isSpinning, setIsSpinning] = useState(true);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <App
+        user={user}
+        setUser={setUser}
+        isSpinning={isSpinning}
+        setIsSpinning={setIsSpinning}
+      />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          path: "/",
+          element: <HomePage
+            setIsSpinning={setIsSpinning}
+          />
+        },
+        {
+          path: "/product/:id",
+          element: <ProductDetailPage />
+        },
+        {
+          path: "/cart",
+          element: <ShoppingCart />
+        },
+        {
+          path: "/payment",
+          element: <PaymentPage />
+        }
+        , {
+          path: "/store/create",
+          element: <CreateStore />
+        },
+        {
+          path: "/store/manage",
+          element: <StoreManagement
+            setIsSpinning={setIsSpinning}
+          />
+        },
+        {
+          path: "/store/delete",
+          element: <StoreDeletion />
+        },
+        {
+          path: "/admin",
+          element: <AdminPage />
+        },
+        {
+          path: "/account",
+          element: <AccountManagement
+            user={user}
+            setUser={setUser}
+            setIsSpinning={setIsSpinning}
+          />
+        },
+        {
+          path: "/store",
+          element: <StorePage />
+        },
+        {
+          path: "/success",
+          element: <SuccessPage />
+        }
+      ]
+    },
+    {
+
+      path: "/login",
+      element: <LoginPage
+        user={user}
       />
-      <ForgotPassWordPage />
-    </>
-  },
-  {
-    path: "/product/:id",
-    element: <>
-      <Header
-        isLogin={true}
+    },
+    {
+      path: "/register",
+      element: <RegisterPage
+        user={user}
       />
-      <ProductDetailPage />
-    </>
-  },
-  {
-    path: "/cart",
-    element: <>
-      <Header
-        isLogin={true}
-      />
-      <ShoppingCart />
-    </>
-  },
-  {
-    path: "/payment",
-    element: <>
-      <Header
-        isLogin={true}
-      />
-      <PaymentPage />
-    </>
-  },
-  {
-    path: "/account",
-    element: <>
-      <Header
-        isLogin={false}
-      />
-      <AccountManagement />
-    </>
-  },
-  {
-    path: "/store",
-    element: <>
-      <Header
-        isLogin={true}
-      />
-      <StorePage />
-    </>
-  }
-  , {
-    path: "/store/create",
-    element: <>
-      <Header
-        isLogin={true}
-      />
-      <CreateStore />
-    </>
-  },
-  {
-    path: "/store/manage",
-    element: <>
-      <Header
-        isLogin={true}
-      />
-      <StoreManagement />
-    </>
-  },
-  {
-    path: "/store/delete",
-    element: <>
-      <Header
-        isLogin={true}
-      />
-      <StoreDeletion />
-    </>
-  },
-  {
-    path: "/admin",
-    element: <>
-      <Header
-        isLogin={true}
-      />
-      <AdminPage />
-    </>
-  },
-])
+
+    },
+    {
+      path: "/forgot-password",
+      element: <ForgotPassWordPage />
+    },
+
+  ])
+  return (
+    <RouterProvider router={router} />
+  )
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Root />
   </StrictMode>,
 )

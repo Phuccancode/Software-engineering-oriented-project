@@ -3,8 +3,9 @@ import styles from '../styles/Management.module.css';
 import Sidebar from '../components/account/Sidebar';
 import { Information } from '../components/account/Detail';
 
-const AccountManagement: React.FC = () => {
-    const [activeIndex, setActiveIndex] = useState<Number>(3);
+const AccountManagement = (props: any) => {
+    const [activeIndex, setActiveIndex] = useState<Number>(2);
+    const { user, setUser, setIsSpinning } = props;
     return (
         <div className={styles.storeManagement}>
             <main className={styles.mainContent}>
@@ -20,6 +21,10 @@ const AccountManagement: React.FC = () => {
                     />
                     <Information
                         activeIndex={activeIndex}
+                        user={user}
+                        setUser={setUser}
+                        setIsSpinning={setIsSpinning}
+
                     />
                 </div>
             </main>

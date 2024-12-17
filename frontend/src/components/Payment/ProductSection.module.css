@@ -1,73 +1,53 @@
-/* ProductSection.module.css */
-
+/* Tổng thể giỏ hàng */
 .productSection {
+  padding: 20px;
   max-width: 1240px;
   width: 100%;
-  margin: 60px auto 0;
-  background-color: #f9f9f9;
-  border: 2px solid #000000; /* Added border */
-  box-sizing: border-box;
-  
+  font-family: Arial, sans-serif;
+  background-color: #fff;
 }
 
+/* Tiêu đề của giỏ hàng */
 .sectionTitle {
-  font-size: 2.5rem;
-  margin-bottom: 30px;
-  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
   color: #333;
 }
 
-.productHeader {
+/* Container của từng sản phẩm */
+.productContainer {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+}
+
+/* Hàng sản phẩm */
+.productRow {
   display: flex;
   justify-content: space-between;
-  padding: 15px 30px;
-  background-color: #eee;
-  font-weight: bold;
-  border-bottom: 2px solid #ccc;
-  font-size: 1.2rem;
-}
-
-.productHeader span:nth-child(1) {
-  flex: 2; /* Sản phẩm */
-}
-
-.productHeader span:nth-child(2) {
-  flex: 2; /* Đơn giá */
-  text-align: right;
-}
-
-.productHeader span:nth-child(3) {
-  flex: 2; /* Số lượng */
-  text-align: right;
-}
-
-.productHeader span:nth-child(4) {
-  flex: 2; /* Thành tiền */
-  text-align: right;
-}
-
-.productItem {
-  display: flex;
-  flex-direction: column; /* Stack elements vertically */
-  justify-content: space-between;
-  padding: 20px 30px;
-  border: 1px solid #eee;
-  border-bottom: 1px solid #ddd;
-  flex-wrap: wrap;
-  align-items: flex-start; /* Align items to the start */
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
 }
 
 .productInfo {
   display: flex;
   align-items: center;
-  flex: 10;
-  width: 100%;
+}
+
+.productCheckbox {
+  margin-right: 10px;
 }
 
 .productImage {
-  height: 100px;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
-  margin-right: 20px;
+  margin-right: 15px;
 }
 
 .productDetails {
@@ -76,93 +56,218 @@
 }
 
 .productName {
-  font-size: 1.3rem;
-  color: #555;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
 }
 
 .productVariant {
-  font-size: 1rem;
-  color: #777;
+  font-size: 14px;
+  color: #888;
 }
 
+/* Giá, số lượng, và thành tiền */
 .productPricing {
   display: flex;
-  flex: 7; /* Total flex for pricing */
-  justify-content: space-between;
-  margin-left: 10px;
-  gap: 30px; /* Adjust spacing between pricing elements */
-  width: 100%;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
-.productPrice {
-  flex: 1; /* Matches Đơn giá */
-  text-align: right;
-  font-size: 1.1rem;
-  color: #333;
-}
-
-.productQuantity {
-  flex: 1.5; /* Matches Số lượng */
-  text-align: right;
-  font-size: 1.1rem;
+.productPricing span {
+  font-size: 14px;
   color: #333;
 }
 
 .productTotal {
-  flex: 2; /* Matches Thành tiền */
-  text-align: right;
-  font-size: 1.1rem;
+  font-weight: bold;
+  color: #4260fc;
+}
+
+/* Hàng voucher */
+.voucherRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.voucherButton {
+  background-color: #4260fc ;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.voucherDiscount {
+  font-size: 14px;
+  font-weight: bold;
+  color: #4260fc;
+}
+
+/* Hàng phí vận chuyển */
+
+
+/* Hàng tổng tiền */
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.totalText {
+  font-size: 16px;
   color: #333;
 }
 
-.shippingSection {
-  width: 100%;
-  margin-top: 15px; /* Add space above the shipping section */
+.totalAmount {
+  font-size: 18px;
+  color: #4260fc;
 }
-
-.extraSections {
+.shippingRow {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  align-items: center;
   margin-top: 20px;
+  font-weight: bold;
+  border-top: 2px solid #ddd;
+  padding-top: 10px;
+}
+/* Hàng tổng chi phí giỏ hàng */
+.totalCostRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  font-weight: bold;
+  border-top: 2px solid #ddd;
+  padding-top: 10px;
 }
 
-.extraSections > :last-child {
-  margin-right: 0;
+.totalCostText {
+  font-size: 18px;
+  color: #333;
 }
 
-@media (max-width: 768px) {
-  .productHeader,
-  .productItem {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .productHeader span,
-  .productPrice,
-  .productQuantity,
-  .productTotal {
-    width: 100%;
-    text-align: left;
-    margin: 5px 0;
-  }
-
-  .productPricing {
-    flex-direction: column;
-    width: 100%;
-    gap: 10px;
-  }
-
-  .extraSections {
-    flex-direction: column;
-  }
-
-  .extraSections > * {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .extraSections > :last-child {
-    margin-bottom: 0;
-  }
+.totalCostAmount {
+  font-size: 20px;
+  color: #4260fc;
 }
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Thêm vào ProductSection.module.css */
+.voucherOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.voucherOption {
+  background-color: #4260fc;
+  border: 1px solid #ddd;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: left;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.voucherOption:hover {
+  background-color: #007bff;
+  color: rgb(255, 255, 255);
+}
+
+.selectedVoucher {
+  background-color: #28a745;
+  color: white;
+}
+
+.closeButton {
+  margin-top: 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+}
+.storeContainer {
+  margin-bottom: 30px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.storeContainer h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.paymentButton {
+  margin-top: 20px;
+  background-color: #4CAF50; /* Green */
+  color: white;
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.paymentButton:hover {
+  background-color: #45a049;
+}
+
+.discountSection {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f1f1f1;
+}
+
+.discountSection h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.discountSection select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 16px;} 

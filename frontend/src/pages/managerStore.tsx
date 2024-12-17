@@ -3,8 +3,9 @@ import styles from '../styles/Management.module.css';
 import Sidebar from '../components/store/Sidebar';
 import { Information } from '../components/store/Information';
 
-const StoreManagement: React.FC = () => {
-    const [activeIndex, setActiveIndex] = useState<Number>(4);
+const StoreManagement = (props: any) => {
+    const { setIsSpinning } = props;
+    const [activeIndex, setActiveIndex] = useState<Number>(3);
     return (
         <div className={styles.storeManagement}>
             <main className={styles.mainContent}>
@@ -19,6 +20,7 @@ const StoreManagement: React.FC = () => {
                     />
                     <Information
                         activeIndex={activeIndex}
+                        setIsSpinning={setIsSpinning}
                     />
                 </div>
             </main>

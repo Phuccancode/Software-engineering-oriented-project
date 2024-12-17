@@ -7,8 +7,9 @@
   max-width: 1240px;
   overflow: hidden;
   padding: 18px 0 43px;
-  border: 1px solid #000;
+  border: 1px solid #ddd;
   margin-top: 51px;
+  border-radius: 8px;
 }
 
 .sectionTitle {

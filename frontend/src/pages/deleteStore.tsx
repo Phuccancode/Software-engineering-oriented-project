@@ -1,9 +1,74 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles/Management.module.css';
 import { Information } from '../components/store/Information';
+import { Button, Form, Input, Modal, notification } from 'antd';
+import { deleteStoreAPI, getInforStoreAPI } from '../services/api.service1';
+import { useNavigate } from 'react-router-dom';
 
 const StoreDeletion: React.FC = () => {
-    const [activeIndex, setActiveIndex] = useState<Number>(4);
+    const [form] = Form.useForm();
+    const navigate = useNavigate();
+    const [nameStore, setNameStore] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const handleOk = async () => {
+        try {
+            setLoading(true);
+            const response: any = await deleteStoreAPI(password);
+            if (response.statusCode === 200) {
+                notification.success({
+                    message: 'Thông báo',
+                    description: 'Xóa cửa hàng thành công',
+                })
+                navigate('/store');
+            }
+            else {
+                notification.error({
+                    message: 'Thông báo',
+                    description: response.message
+                })
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+        setLoading(false);
+        setOpen(false);
+    };
+
+    const handleCancel = () => {
+        setOpen(false);
+    };
+
+    const getInformation = async () => {
+        try {
+            const response: any = await getInforStoreAPI();
+            if (response.statusCode !== 200) {
+                notification.warning({
+                    message: 'Thông báo',
+                    description: 'Bạn chưa có cửa hàng nào',
+                })
+                navigate('/store/create');
+            }
+            else {
+                form.setFieldsValue({
+                    nameStore: response.data.name,
+                });
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+    useEffect(() => {
+        getInformation();
+    }, []);
+
+
+    const handleSubmit = async () => {
+        setOpen(true);
+    }
     return (
         <div className={styles.storeManagement}>
             <main className={styles.mainContent}>
@@ -25,52 +90,83 @@ const StoreDeletion: React.FC = () => {
                 >
                     <section className={styles.mainSection}>
                         <div className={styles.infoCard}>
-                            <form>
-                                <div className={styles.infoRow}
+                            <Form
+                                form={form}
+                                name="basic"
+                                labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                                initialValues={{ remember: true }}
+                                //   onFinish={onFinish}
+                                //   onFinishFailed={onFinishFailed}
+                                autoComplete="off"
+                                className={styles.loginFormContainer}
+                                style={{
+                                    height: '100%',
+                                    width: '60%',
+                                    scale: '1.5',
+                                    marginTop: '8.6%',
+                                    marginBottom: '8.6%',
+                                    position: 'relative',
+
+                                }}
+                            >
+
+                                <Form.Item
+
+                                    label="Tên cửa hàng"
+                                    name="nameStore"
+                                    rules={[{ required: true, message: 'Please input your store name!' }]}
+                                    initialValue={nameStore}
                                 >
-                                    <label htmlFor="selectStore" className={styles.infoLabel}>Chọn cửa hàng cần xóa:</label>
-                                    <select
-                                        name="selectStore"
-                                        className={styles.infoValue}
-                                        style={{
-                                            outline: 'none',
-                                            width: '370px',
-                                        }}
+                                    <Input
+                                        value={nameStore}
+                                        onChange={(e) => setNameStore(e.target.value)}
+                                        disabled
+                                    />
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="Mật khẩu"
+                                    name="password"
+                                    rules={[{ required: true, message: 'Please input your password!' }]}
+                                >
+                                    <Input.Password
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                </Form.Item>
+
+                                <Form.Item wrapperCol={{ offset: 16, span: 16 }}>
+                                    <Button
+                                        type="primary"
+                                        onClick={() => handleSubmit()}
+                                        style={{ width: '70%', height: '40px' }}
+
+
                                     >
-                                        <option defaultChecked hidden>Chọn cửa hàng</option>
-                                        <option value="store1">Cửa hàng 1</option>
-                                        <option value="store2">Cửa hàng 2</option>
-                                        <option value="store3">Cửa hàng 3</option>
-                                    </select>
-                                </div>
-                                <div className={styles.infoRow}>
-                                    <label htmlFor="reasonDelete" className={styles.infoLabel}>Lý do xóa:</label>
-                                    <input
-                                        type="text"
-                                        name="reasonDelete"
-                                        className={styles.infoValue}
-                                        placeholder="Lý do xóa"
-                                        style={{
-                                            outline: 'none',
-                                            width: '330px',
-                                        }}
-                                    />
-                                </div>
-                                <div className={styles.infoRow}>
-                                    <label htmlFor="passwordConfirmation" className={styles.infoLabel}>Xác nhận mật khẩu:</label>
-                                    <input
-                                        type="password"
-                                        name="passwordConfirmation"
-                                        className={styles.infoValue}
-                                        placeholder="Mật khẩu"
-                                        style={{
-                                            outline: 'none',
-                                            width: '330px',
-                                        }}
-                                    />
-                                </div>
-                                <button type="submit" className={styles.submitButton}>Hoàn tất</button>
-                            </form>
+                                        Xóa cửa hàng
+                                    </Button>
+                                </Form.Item>
+                            </Form>
+
+                            <Modal
+                                open={open}
+                                title="Xác nhận xóa cửa hàng"
+                                onCancel={handleCancel}
+                                footer={[
+                                    <Button key="back" onClick={handleCancel}>
+                                        Hủy
+                                    </Button>,
+                                    <Button key="submit" type="primary" onClick={handleOk} loading={loading}>
+                                        Xác nhận
+                                    </Button>,
+                                ]}
+                            >
+                                <p style={{
+                                }}>
+                                    ⚠️ Bạn có chắc chắn muốn xóa cửa hàng không?
+                                </p>
+                            </Modal>
                         </div>
                     </section>
                 </div>
