@@ -1,7 +1,7 @@
-import { UploadOutlined } from "@ant-design/icons";
+
 import { Button, DatePicker, Form, Input, message, Modal, notification, Upload } from "antd"
 import { useState } from "react";
-import { createProductAPI, createStoreDiscountAPI } from "../../../../services/api.service1";
+import { createStoreDiscountAPI } from "../../../../services/api.service1";
 
 export const ModalCreate = (props: any) => {
 
@@ -37,8 +37,8 @@ export const ModalCreate = (props: any) => {
                     message: 'Thành công',
                     description: 'Tạo mã giảm giá thành công'
                 })
-                setIsModalCreateOpen(false);
                 resetModal();
+                setIsModalCreateOpen(false);
                 getDiscounts();
             }
             else {
@@ -58,8 +58,9 @@ export const ModalCreate = (props: any) => {
     }
 
     const handleCancelCreate = () => {
-        setIsModalCreateOpen(false);
         resetModal();
+        setIsModalCreateOpen(false);
+
     }
 
 
@@ -68,13 +69,14 @@ export const ModalCreate = (props: any) => {
             <Modal title="Thêm mã giảm giá"
                 open={isModalCreateOpen}
                 maskClosable={false}
+                destroyOnClose={true}
                 okText="Create"
-                onCancel={handleCancelCreate}
+                onCancel={() => handleCancelCreate()}
                 footer={[
-                    <Button key="back" onClick={handleCancelCreate}>
+                    <Button key="back" onClick={() => handleCancelCreate()}>
                         Cancel
                     </Button>,
-                    <Button key="submit" type="primary" loading={loading} onClick={handleOkCreate}>
+                    <Button key="submit" type="primary" loading={loading} onClick={() => handleOkCreate()}>
                         Create
                     </Button>,
                 ]}

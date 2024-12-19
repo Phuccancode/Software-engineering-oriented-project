@@ -1,5 +1,5 @@
 import { Menu, MenuProps, notification } from "antd";
-import { AppstoreOutlined, BellOutlined, HomeOutlined, LoginOutlined, LogoutOutlined, MenuOutlined, SettingOutlined, ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
+import { AppstoreOutlined, BellOutlined, HomeOutlined, LoginOutlined, LogoutOutlined, MenuOutlined, SettingOutlined, ShopOutlined, ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import './header.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -84,10 +84,16 @@ const Header = (props: any) => {
                         },
 
                     },
+                    user.role === 'ADMIN' ?
+                        {
+                            label: <Link to="/admin">Quản lý hệ thống</Link>,
+                            key: 'setting:2',
+                            icon: <AppstoreOutlined />
+                        } : null,
                     {
                         label: <Link to="/store">Trở thành người bán hàng</Link>,
-                        key: 'setting:2',
-                        icon: <AppstoreOutlined />
+                        key: 'setting:3',
+                        icon: <ShopOutlined />
                     },
                     {
                         label: <Link to="/cart">Giỏ hàng</Link>,
@@ -96,7 +102,7 @@ const Header = (props: any) => {
                     },
                     {
                         label: "Đăng xuất",
-                        key: 'setting:3',
+                        key: 'setting:5',
                         icon: <LogoutOutlined />,
                         onClick: () => handleLogout()
                     }
